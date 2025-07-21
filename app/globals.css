@@ -1,9 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-/* ---break---*/
-@custom-variant dark (&:is(.dark *));
 
 @tailwind utilities;
+
+
 
 :root {
 
@@ -12,9 +12,11 @@
   --humae-violet: #6A4087;
   --humae-orange: #F18F01;
   --humae-gris: #4A4A4A;
+
+
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: 0 0% 100%; /* Fond blanc */
+  --foreground: 0 0% 0%;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -85,20 +87,14 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 /* ---break---*/
 
 .dark {
 
-  --background: oklch(0.145 0 0);
+  --background: 0 0% 100%;
 
-  --foreground: oklch(0.985 0 0);
+  --foreground: 0 0% 0%;
 
   --card: oklch(0.205 0 0);
 
