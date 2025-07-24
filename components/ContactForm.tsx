@@ -7,7 +7,7 @@ import * as z from 'zod';
 
 // On importe notre Server Action et le système de notifications
 import { toast } from "sonner";
-import { sendEmail } from '../app/action'; // Assure-toi que le chemin est bon
+import { sendEmail } from '@/app/action';
 
 import { Button } from '@/components/ui/button';
 import {
