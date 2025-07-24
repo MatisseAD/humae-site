@@ -100,7 +100,7 @@ export function ContactForm() {
                             <FormItem>
                                 <FormLabel>Nom complet</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="John Doe" {...field} />
+                                    <Input placeholder="Jean Martin" {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

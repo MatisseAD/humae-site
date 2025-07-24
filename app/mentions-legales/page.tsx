@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function MentionsLegalesPage() {
     return (
         <div className="container mx-auto max-w-4xl px-4 py-12">
-            <h1 className="text-4xl font-bold text-humae-violet mb-2">Mentions Légales</h1>
+            <h1 className="text-4xl font-bold text-[var(--humae-violet)] mb-2">Mentions Légales</h1>
             <p className="text-sm text-gray-500 mb-8">Dernière mise à jour : 21 juillet 2025</p>
 
             <div className="space-y-8 text-gray-700">
@@ -25,8 +25,8 @@ export default function MentionsLegalesPage() {
                     <ul className="mt-4 space-y-1 list-inside">
                         <li><strong>Siège social :</strong> 50 rue du Pré Magné, 69126 BRINDAS</li>
                         <li><strong>Responsable de la publication :</strong> Céline MONIN</li>
-                        <li><strong>Téléphone :</strong> <a href="tel:+33472492190" className="text-humae-violet hover:underline">04 72 49 21 90</a></li>
-                        <li><strong>Email :</strong> <a href="mailto:contact@humae.fr" className="text-humae-violet hover:underline">contact@humae.fr</a></li>
+                        <li><strong>Téléphone :</strong> <a href="tel:+33472492190" className="text-[var(--humae-violet)] hover:underline">04 72 49 21 90</a></li>
+                        <li><strong>Email :</strong> <a href="mailto:contact@humae.fr" className="text-[var(--humae-violet)] hover:underline">contact@humae.fr</a></li>
                     </ul>
                 </section>
 
@@ -39,7 +39,7 @@ export default function MentionsLegalesPage() {
                     </p>
                     <ul className="mt-4 space-y-1 list-inside">
                         <li><strong>Siège social :</strong> 2 rue Kellermann, 59100 Roubaix</li>
-                        <li><strong>Site web :</strong> <a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener noreferrer" className="text-humae-violet hover:underline">ovhcloud.com</a></li>
+                        <li><strong>Site web :</strong> <a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener noreferrer" className="text-[var(--humae-violet)] hover:underline">ovhcloud.com</a></li>
                     </ul>
                 </section>
 
@@ -60,10 +60,10 @@ export default function MentionsLegalesPage() {
                         <li>Droit à la portabilité</li>
                     </ul>
                     <p className="mt-4">
-                        Ces données sont conservées pour une durée de 3 ans après notre dernier contact et ne sont pas transférées à des tiers. Pour exercer vos droits, veuillez contacter le responsable de traitement par e-mail à <a href="mailto:contact@humae.fr" className="text-humae-violet hover:underline">contact@humae.fr</a>.
+                        Ces données sont conservées pour une durée de 3 ans après notre dernier contact et ne sont pas transférées à des tiers. Pour exercer vos droits, veuillez contacter le responsable de traitement par e-mail à <a href="mailto:contact@humae.fr" className="text-[var(--humae-violet)] hover:underline">contact@humae.fr</a>.
                     </p>
                     <p className="mt-4">
-                        En cas de réclamation, vous pouvez contacter la Commission Nationale de l’Informatique et des Libertés (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-humae-violet hover:underline">www.cnil.fr</a>).
+                        En cas de réclamation, vous pouvez contacter la Commission Nationale de l’Informatique et des Libertés (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-[var(--humae-violet)] hover:underline">www.cnil.fr</a>).
                     </p>
                 </section>
 

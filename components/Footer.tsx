@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from "next/image";
 import * as React from "react";
 import {Separator} from "@/components/ui/separator";
+import SectionSeparator from "@/components/SectionSeparator";
 
 // Icône pour LinkedIn (à remplacer si tu utilises une autre bibliothèque)
 const LinkedInIcon = (props: React.ComponentProps<'svg'>) => (
@@ -21,7 +22,7 @@ const FacebookIcon = (props: React.ComponentProps<'svg'>) => (
 
 export function Footer() {
     return (
-        <footer className="bg-background border-t border-gray-200">
+        <footer className="bg-background border-t border-gray-200 relative">
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Colonne 1: Logo et Coordonnées */}
@@ -63,11 +64,11 @@ export function Footer() {
                     <div>
                         <h4 className="font-semibold mb-4 text-black">Suivez-nous</h4>
                         <a href="https://fr.linkedin.com/company/humae-expertise-comptable" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                            <LinkedInIcon className="w-6 h-6 text-black hover:text-humae-violet" />
+                            <LinkedInIcon className="w-6 h-6 text-black hover:text-[var(--humae-violet)]" />
                         </a>
 
                         <a href="https://www.facebook.com/HumaeBrindas#" target="_blank" rel="noopener noreferrer" aria-label="Facebook" >
-                            <FacebookIcon  className="w-6 h-6 text-black hover:text-humae-violet " />
+                            <FacebookIcon  className="w-6 h-6 text-black hover:text-[var(--humae-violet)] " />
                         </a>
 
                     </div>

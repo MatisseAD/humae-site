@@ -14,7 +14,7 @@ export default function ContactPage() {
     return (
         <div className="container mx-auto max-w-6xl px-4 py-16">
             <div className="text-center mb-12">
-                <h1 className="text-4xl font-bold text-humae-violet">Contactez-nous</h1>
+                <h1 className="text-4xl font-bold text-[var(--humae-violet)]">Contactez-nous</h1>
                 <p className="mt-4 text-lg text-gray-600">
                     Une question ? Un projet ? N'hésitez pas à nous contacter.
                 </p>
@@ -39,14 +39,14 @@ export default function ContactPage() {
                         <PhoneIcon className="w-6 h-6 mt-1 text-humae-orange" />
                         <div>
                             <h3 className="font-semibold">Téléphone</h3>
-                            <a href="tel:+33472492190" className="text-gray-600 hover:text-humae-violet">04 72 49 21 90</a>
+                            <a href="tel:+33472492190" className="text-gray-600 hover:text-[var(--humae-violet)]">04 72 49 21 90</a>
                         </div>
                     </div>
                     <div className="flex items-start space-x-4">
                         <EnvelopeIcon className="w-6 h-6 mt-1 text-humae-orange" />
                         <div>
                             <h3 className="font-semibold">Email</h3>
-                            <a href="mailto:contact@humae.fr" className="text-gray-600 hover:text-humae-violet">contact@humae.fr</a>
+                            <a href="mailto:contact@humae.fr" className="text-gray-600 hover:text-[var(--humae-violet)]">contact@humae.fr</a>
                         </div>
                     </div>
                 </div>
