@@ -2,7 +2,7 @@
 
 import UnderConstruction from '@/components/UnderConstruction';
 
-export default function NosOffres() {
+export default function ActuPage() {
     return(
         <UnderConstruction />
     );

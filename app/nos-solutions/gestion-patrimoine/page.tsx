@@ -57,7 +57,7 @@ export default function GestionPatrimoinePage() {
                     style={{ y: backgroundY }}
                 >
                     <Image
-                        src="/assets/solutions/patrimoine-green-hero.jpg" // L'image verte
+                        src="/assets/patrimoine-hero.jpg" // L'image verte
                         alt="Structure abstraite et verte symbolisant la croissance du patrimoine"
                         fill
                         className="object-cover opacity-30"

@@ -67,9 +67,9 @@ export default function GestionComptablePage() {
             <section className="py-24">
                 <div className="container mx-auto px-4 max-w-4xl">
                     <Tabs defaultValue="comptable" className="w-full">
-                        <TabsList className="grid w-full grid-cols-2">
-                            <TabsTrigger value="comptable">Gestion Comptable</TabsTrigger>
-                            <TabsTrigger value="fiscale">Gestion Fiscale</TabsTrigger>
+                        <TabsList className=" grid w-full grid-cols-2">
+                            <TabsTrigger className="hover:cursor-pointer" value="comptable">Gestion Comptable</TabsTrigger>
+                            <TabsTrigger className="hover:cursor-pointer" value="fiscale">Gestion Fiscale</TabsTrigger>
                         </TabsList>
                         <TabsContent value="comptable" className="pt-8">
                             <div className="grid md:grid-cols-2 gap-8 items-center">

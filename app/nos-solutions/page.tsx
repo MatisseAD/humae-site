@@ -14,28 +14,28 @@ const solutions = [
         description: "De l'idée à l'immatriculation, nous sommes à vos côtés pour lancer votre projet sur des bases solides.",
         Icon: BuildingOffice2Icon,
         features: ["Choix du statut juridique", "Rédaction des statuts", "Business plan", "Immatriculation"],
-        href: "/creation-entreprise",
+        href: "/nos-solutions/creation-entreprise",
     },
     {
         name: "Devenir Freelance",
         description: "Nous vous aidons à choisir le bon statut et à optimiser vos revenus pour une carrière d'indépendant sereine.",
         Icon: UserIcon,
         features: ["Comparatif des statuts", "Optimisation fiscale", "Gestion administrative", "Conseils personnalisés"],
-        href: "/contact?subject=Devenir Freelance",
+        href: "/nos-solutions/devenir-freelance",
     },
     {
         name: "Gestion Comptable & Fiscale",
         description: "Déléguez-nous votre comptabilité et vos déclarations pour vous concentrer sur votre cœur de métier.",
         Icon: BanknotesIcon,
         features: ["Tenue comptable", "Déclarations de TVA", "Bilan annuel", "Optimisation des résultats"],
-        href: "/contact?subject=Gestion Comptable",
+        href: "/nos-solutions/gestion-comptable",
     },
     {
         name: "Gestion Sociale & Paie",
         description: "Assurez la conformité de vos obligations sociales, de l'embauche à la gestion des bulletins de paie.",
         Icon: BriefcaseIcon,
         features: ["Établissement des paies", "Déclarations sociales (DSN)", "Contrats de travail", "Conseil social"],
-        href: "/contact?subject=Gestion Sociale",
+        href: "/nos-solutions/gestion-sociale",
     },
 ];
 
