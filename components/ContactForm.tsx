@@ -5,6 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+// On importe notre Server Action et le système de notifications
+import { toast } from "sonner";
+import { sendEmail } from '../app/action'; // Assure-toi que le chemin est bon
+
 import { Button } from '@/components/ui/button';
 import {
     Form,
@@ -17,17 +21,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-import { AlertCircleIcon, CheckCircle2Icon, PopcornIcon } from "lucide-react"
-import {
-    Alert,
-    AlertDescription,
-    AlertTitle,
-} from "@/components/ui/alert"
-import {JSX} from "react";
-import {useState} from "react";
-import {Separator} from "@/components/ui/separator";
-
-// 1. Définition du schéma de validation avec Zod
+// Le schéma de validation ne change pas
 const formSchema = z.object({
     name: z.string().min(2, {
         message: 'Le nom doit contenir au moins 2 caractères.',
@@ -41,29 +35,7 @@ const formSchema = z.object({
     }),
 });
 
-const ALERT_CONTAINER_STYLES = "grid w-full max-w-xl items-start gap-4";
-const SUCCESS_TITLE = "Email envoyé avec succès";
-const SUCCESS_DESCRIPTION = "Merci pour votre message, nous vous répondrons dans les plus brefs délais.";
-
-export function AlertSuccessful(): JSX.Element {
-    return (
-        <div className={ALERT_CONTAINER_STYLES}>
-            <Alert variant="success">
-                <CheckCircle2Icon />
-                <AlertTitle>{SUCCESS_TITLE}</AlertTitle>
-                <AlertDescription>
-                    {SUCCESS_DESCRIPTION}
-                </AlertDescription>
-            </Alert>
-        </div>
-    );
-}
-
-
 export function ContactForm() {
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
-    
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -75,98 +47,93 @@ export function ContactForm() {
     });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        try {
-            setIsSubmitting(true);
-            // Simulation d'un appel API
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            console.log(values);
-            setShowSuccess(true);
-            form.reset();
-        } catch (error) {
-            console.error('Erreur lors de l\'envoi:', error);
-        } finally {
-            setIsSubmitting(false);
+        const result = await sendEmail(values);
+
+        if (result.success) {
+            toast.success("Votre message a bien été envoyé !");
+        } else {
+            toast.error("Une erreur est survenue. Veuillez réessayer.");
+            console.error("Erreur d'envoi d'email:", result.error);
         }
     }
 
     return (
-        <>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Nom complet</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Jean Martin" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Adresse e-mail</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="jean.martin@exemple.fr" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="subject"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Sujet (Optionnel)</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Demande de devis" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="message"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Votre message</FormLabel>
-                                <FormControl>
-                                    <Textarea
-                                        placeholder="Bonjour, je souhaiterais obtenir des informations sur..."
-                                        className="resize-none"
-                                        rows={5}
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <Button 
-                        type="submit" 
-                        className="hover:cursor-pointer w-full bg-[#6A4087] hover:bg-[#6A4087]/90"
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? 'Envoi en cours...' : 'Envoyer le message'}
-                    </Button>
-                </form>
-            </Form>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
-            {showSuccess && (
-                <div className="space-y-8">
-                    <Separator className="my-4" />
-                    <AlertSuccessful />
-                </div>
-            )}
+                {/* Champ pour le nom */}
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Nom complet</FormLabel>
+                            <FormControl>
+                                <Input placeholder="John Doe" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
 
-        </>
+                {/* Champ pour l'email */}
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Adresse e-mail</FormLabel>
+                            <FormControl>
+                                <Input placeholder="john.doe@exemple.com" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* Champ pour le sujet */}
+                <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Sujet (Optionnel)</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Demande de devis" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* Champ pour le message */}
+                <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Votre message</FormLabel>
+                            <FormControl>
+                                <Textarea
+                                    placeholder="Bonjour, je souhaiterais obtenir des informations sur..."
+                                    className="resize-none"
+                                    rows={5}
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <Button
+                    type="submit"
+                    className="w-full bg-[var(--humae-violet)] hover:bg-[var(--humae-violet)]/90"
+                    disabled={form.formState.isSubmitting} // On désactive le bouton pendant l'envoi
+                >
+                    {form.formState.isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+                </Button>
+            </form>
+        </Form>
     );
 }

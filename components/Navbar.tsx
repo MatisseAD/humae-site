@@ -28,6 +28,7 @@ import {
     CurrencyEuroIcon,
     UserGroupIcon,
     BriefcaseIcon,
+    SparklesIcon,
 } from '@heroicons/react/24/outline';
 import Image from "next/image";
 
@@ -36,28 +37,34 @@ import Image from "next/image";
 const solutions: { title: string; href: string; description: string, icon: React.ElementType }[] = [
     {
         title: 'Créer mon entreprise',
-        href: '/creation-entreprise',
+        href: '/nos-solutions/creation-entreprise',
         description: 'De l\'idée aux statuts, nous vous guidons à chaque étape.',
         icon: BuildingStorefrontIcon,
     },
     {
         title: 'Devenir Freelance',
-        href: '/devenir-freelance',
+        href: '/nos-solutions/devenir-freelance',
         description: 'Choisissez le bon statut et optimisez vos revenus dès le départ.',
         icon: UserCircleIcon,
     },
     {
         title: 'Gestion Comptable & Fiscale',
-        href: '/gestion-comptable',
+        href: '/nos-solutions/gestion-comptable',
         description: 'Concentrez-vous sur votre métier, nous nous occupons du reste.',
         icon: CalculatorIcon,
     },
     {
         title: 'Gestion Sociale & Paie',
-        href: '/gestion-sociale',
+        href: '/nos-solutions/gestion-sociale',
         description: 'Établissement des bulletins de paie et déclarations sociales.',
         icon: UsersIcon,
     },
+    {
+        title: 'Gestion de patrimoine',
+        href: '/nos-solutions/gestion-patrimoine',
+        description: 'Optimisez votre fiscalité et préparez votre avenir.',
+        icon: SparklesIcon,
+    }
 ];
 
 const cabinet: { title: string; href: string; description: string, icon: React.ElementType }[] = [
@@ -237,7 +244,7 @@ const ListItem = React.forwardRef<HTMLLIElement, ListItemProps>(
                     {...props}
                 >
                     <div className={titleContainerStyles}>
-                        <Icon className={iconStyles}/>
+                        <Icon className="h-5 w-5 mr-2 text-[var(--humae-violet)]" />
                         {title}
                     </div>
                     <p className={descriptionStyles}>{children}</p>

@@ -3,7 +3,6 @@
 import HeroSection from '@/components/HeroSection';
 import FeatureSectionCreate from '@/components/FeatureSectionCreate';
 import FeatureSectionManage from '@/components/FeatureSectionManage';
-import KeyPointSection from "@/components/KeyPointSection";
 import { TestimonialSection } from '@/components/TestimonialSection';
 import FinalCTASection from "@/components/FinalCTASection";
 import StackedCardsSection from "@/components/StackedCardsSection";

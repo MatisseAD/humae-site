@@ -22,6 +22,7 @@ const buttonVariants = cva(
           link: "text-primary underline-offset-4 hover:underline",
           humae: "bg-[#6A4087] !text-white shadow-xs hover:bg-[#6A4087]/90",
           humaeSecondary: "bg-[#F18F01] !text-white shadow-xs hover:bg-[#F18F01]/90",
+          humaeButtonTop: "bg-gray-200 hover:cursor-pointer fixed bottom-4 right-4 z-50 rounded-full p-2 shadow-lg transition-colors duration-300 ease-in-out hover:bg-[var(--humae-orange)] focus:outline-none focus:ring-2 focus:ring-[var(--humae-violet)] focus:ring-offset-2"
         },
         size: {
           default: "h-9 px-4 py-2 has-[>svg]:px-3",

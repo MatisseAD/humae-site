@@ -19,6 +19,12 @@ const teamMembers = [
         imageSrc: '/assets/team/team-christian.jpg',
         linkedinUrl: '#',
     },
+    {
+        name: "Nicolas ROYER",
+        role: 'Collaborateur Comptable',
+        imageSrc: '/assets/team/team-nicolas.jpg',
+        linkedinUrl: 'https://fr.linkedin.com/in/nicolas-royer-0b',
+    }
 ];
 
 export default function NotreEquipePage() {

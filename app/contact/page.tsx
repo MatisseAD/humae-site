@@ -1,9 +1,10 @@
 // app/contact/page.tsx
 
 import type { Metadata } from 'next';
-import { ContactForm } from '@/components/ContactForm'; // Importe ton nouveau formulaire
+import { ContactForm } from '@/components/ContactForm';
 import { PhoneIcon, EnvelopeIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import Link from "next/link";
+// Les imports de toast et sendEmail ont été retirés car non utilisés ici
 
 export const metadata: Metadata = {
     title: 'Contact - Humae',
@@ -25,25 +26,25 @@ export default function ContactPage() {
                 <div className="space-y-6">
                     <h2 className="text-2xl font-semibold">Nos coordonnées</h2>
                     <div className="flex items-start space-x-4">
-                        <MapPinIcon className="w-6 h-6 mt-1 text-humae-orange" />
+                        <MapPinIcon className="w-6 h-6 mt-1 text-[var(--humae-orange)]" />
                         <div>
                             <h3 className="font-semibold">Adresse</h3>
                             <p className="text-gray-600">
                                 <Link target="_blank" href="https://maps.app.goo.gl/GLPqcFK9WbbPAWLo7">
-                                50 rue du Pré Magné, 69126 BRINDAS
+                                    50 rue du Pré Magné, 69126 BRINDAS
                                 </Link>
-                                </p>
+                            </p>
                         </div>
                     </div>
                     <div className="flex items-start space-x-4">
-                        <PhoneIcon className="w-6 h-6 mt-1 text-humae-orange" />
+                        <PhoneIcon className="w-6 h-6 mt-1 text-[var(--humae-orange)]" />
                         <div>
                             <h3 className="font-semibold">Téléphone</h3>
                             <a href="tel:+33472492190" className="text-gray-600 hover:text-[var(--humae-violet)]">04 72 49 21 90</a>
                         </div>
                     </div>
                     <div className="flex items-start space-x-4">
-                        <EnvelopeIcon className="w-6 h-6 mt-1 text-humae-orange" />
+                        <EnvelopeIcon className="w-6 h-6 mt-1 text-[var(--humae-orange)]" />
                         <div>
                             <h3 className="font-semibold">Email</h3>
                             <a href="mailto:contact@humae.fr" className="text-gray-600 hover:text-[var(--humae-violet)]">contact@humae.fr</a>
