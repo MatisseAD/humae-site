@@ -8,11 +8,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return [
         { url: baseUrl, lastModified: new Date() },
         { url: `${baseUrl}/nos-solutions`, lastModified: new Date() },
-        { url: `${baseUrl}/creer-mon-entreprise`, lastModified: new Date() },
-        { url: `${baseUrl}/devenir-freelance`, lastModified: new Date() },
-        { url: `${baseUrl}/gestion-comptable`, lastModified: new Date() },
-        { url: `${baseUrl}/gestion-sociale`, lastModified: new Date() },
-        { url: `${baseUrl}/gestion-patrimoine`, lastModified: new Date() },
+        { url: `${baseUrl}/nos-solutions/creation-entreprise`, lastModified: new Date() },
+        { url: `${baseUrl}/nos-solutions/devenir-freelance`, lastModified: new Date() },
+        { url: `${baseUrl}/nos-solutions/gestion-comptable`, lastModified: new Date() },
+        { url: `${baseUrl}/nos-solutions/gestion-sociale`, lastModified: new Date() },
+        { url: `${baseUrl}/nos-solutions/gestion-patrimoine`, lastModified: new Date() },
         { url: `${baseUrl}/le-cabinet`, lastModified: new Date() },
         { url: `${baseUrl}/contact`, lastModified: new Date() },
     ]
