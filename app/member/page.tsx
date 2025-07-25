@@ -3,7 +3,9 @@ import { redirect } from 'next/navigation'
 import MemberDashboard from '@/components/MemberDashboard'
 
 export default async function MemberPage() {
-  const userId = cookies().get('userAuth')?.value
+  const cookieStore = await cookies()
+  const userId = cookieStore.get('userAuth')?.value
+
   if (!userId) redirect('/member/login')
   return <MemberDashboard userId={userId} />
 }

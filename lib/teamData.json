@@ -3,7 +3,7 @@
     "id": "1",
     "name": "Céline MONIN",
     "role": "Expert-Comptable, Gérante",
-    "imageSrc": "/assets/team/team-celine.jpg",
+    "imageSrc": "/uploads/team/phto cm.jpg",
     "linkedinUrl": "https://fr.linkedin.com/in/celine-monin-a68805ba"
   },
   {
@@ -12,12 +12,5 @@
     "role": "Collaborateur Comptable",
     "imageSrc": "/assets/team/team-christian.jpg",
     "linkedinUrl": "#"
-  },
-  {
-    "id": "c7edcaf5-5b8b-4716-aef5-9e8bdfb459a9",
-    "name": "Matisse MARTAYAN",
-    "role": "CEO",
-    "imageSrc": "/uploads/team/matisse-hero.png",
-    "linkedinUrl": "https://github.com/MatisseAD"
   }
 ]

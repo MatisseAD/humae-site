@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { TeamMember } from '@/lib/teamService'
 import { User } from '@/lib/userService'
 import {Button} from "@/components/ui/button";
+import Image from "next/image";
 
 export default function AdminDashboard() {
   const [team, setTeam] = useState<TeamMember[]>([])
@@ -88,7 +89,7 @@ export default function AdminDashboard() {
           <input type="file" className="border p-2 w-full" onChange={handleFileChange} />
           <input className="border p-2 w-full" placeholder="LinkedIn" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} />
         </div>
-        {preview && (<img src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
+        {preview && (<Image src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
         <Button className="text-white px-4 py-2 rounded hover:cursor-pointer" variant={"humae"} onClick={saveMember}>{editingId ? 'Enregistrer' : 'Ajouter'}</Button>
       </div>
       <ul className="space-y-2">
