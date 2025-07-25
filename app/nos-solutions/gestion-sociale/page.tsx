@@ -47,7 +47,7 @@ export default function GestionSocialePage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.2 }}
                     >
-                        Déléguez la complexité de la gestion sociale et de la paie pour vous consacrer à l'essentiel : vos équipes.
+                        Déléguez la complexité de la gestion sociale et de la paie pour vous consacrer à l&apos;essentiel : vos équipes.
                     </motion.p>
                 </div>
                 {/* Formes abstraites en fond */}
@@ -94,7 +94,7 @@ export default function GestionSocialePage() {
                 <SectionSeparator color="#ffffff" variant="wave" />
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-16 max-w-2xl mx-auto">
-                        <h2 className="text-3xl font-bold">Plus qu'une simple gestion de paie</h2>
+                        <h2 className="text-3xl font-bold">Plus qu&apos;une simple gestion de paie</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                         {expertiseAreas.map((area, index) => (

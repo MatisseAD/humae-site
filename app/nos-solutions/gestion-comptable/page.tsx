@@ -84,7 +84,7 @@ export default function GestionComptablePage() {
                                 </div>
                                 <div className="p-8 bg-gray-50 rounded-lg text-center">
                                     <BookOpenIcon className="w-16 h-16 mx-auto text-[var(--humae-violet)]"/>
-                                    <p className="mt-4 font-semibold">Votre bilan annuel est plus qu'une obligation, c'est une source d'information stratégique que nous vous aidons à interpréter.</p>
+                                    <p className="mt-4 font-semibold">Votre bilan annuel est plus qu&apos;une obligation, c&apos;est une source d&apos;information stratégique que nous vous aidons à interpréter.</p>
                                 </div>
                             </div>
                         </TabsContent>
@@ -113,7 +113,7 @@ export default function GestionComptablePage() {
             <section className="relative bg-gray-800 text-white py-24">
                 <SectionSeparator color="#FFFFFF" variant="wave"/>
                 <div className="container mx-auto px-4 text-center">
-                    <h2 className="text-3xl font-bold">Concentrez-vous sur votre croissance, on s'occupe des chiffres.</h2>
+                    <h2 className="text-3xl font-bold">Concentrez-vous sur votre croissance, on s&apos;occupe des chiffres.</h2>
                     <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto">Discutons de la manière dont Humae peut devenir le partenaire de votre sérénité administrative.</p>
                     <Button asChild size="lg" className="mt-8 bg-[var(--humae-orange)] hover:bg-[var(--humae-orange)] hover:bg-opacity-90 text-white">
                         <Link href="/contact?subject=Gestion Comptable et Fiscale">Demander une consultation</Link>

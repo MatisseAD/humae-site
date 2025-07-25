@@ -29,7 +29,7 @@ export default function CabinetLayout({
                         Le Cabinet Humae
                     </h1>
                     <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
-                        L'humain, au cœur de la comptabilité.
+                        L&apos;humain, au cœur de la comptabilité.
                     </p>
                 </div>
             </header>

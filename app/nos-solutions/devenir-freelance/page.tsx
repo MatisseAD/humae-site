@@ -44,7 +44,7 @@ export default function DevenirFreelancePage() {
                             La liberté de créer, la sérénité en plus.
                         </h1>
                         <p className="mt-6 text-lg text-gray-600">
-                            Concentrez-vous sur votre talent. Humae s'occupe de la complexité administrative pour que votre aventure freelance soit un succès dès le premier jour.
+                            Concentrez-vous sur votre talent. Humae s&apos;occupe de la complexité administrative pour que votre aventure freelance soit un succès dès le premier jour.
                         </p>
                         {/* Remplacement */}
                         <Button asChild size="lg" className="mt-8 bg-[var(--humae-violet)] hover:bg-[var(--humae-violet)] hover:bg-opacity-90">
@@ -116,7 +116,7 @@ export default function DevenirFreelancePage() {
             <section className="bg-gray-50 py-24 text-center">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold">Prêt à vous lancer en toute confiance ?</h2>
-                    <p className="mt-4 text-lg text-gray-600">Le premier pas, c'est d'en discuter. Prenons rendez-vous.</p>
+                    <p className="mt-4 text-lg text-gray-600">Le premier pas, c&apos;est d&apos;en discuter. Prenons rendez-vous.</p>
                     {/* Remplacement */}
                     <Button asChild size="lg" className="mt-8 bg-[var(--humae-orange)] hover:bg-[var(--humae-orange)] hover:bg-opacity-90">
                         <Link href="/contact?subject=Devenir Freelance">Planifier un appel</Link>

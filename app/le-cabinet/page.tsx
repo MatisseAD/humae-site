@@ -15,7 +15,7 @@ export default function CabinetHomePage() {
                     Chez Humae, nous sommes convaincus que derrière chaque bilan se cache un projet de vie, une ambition. Notre mission est de vous donner les outils et la sérénité nécessaires pour la réaliser, en alliant la rigueur des chiffres à la force de la relation humaine.
                 </p>
                 <p>
-                    Nous avons fondé ce cabinet pour dépoussiérer l'image de l'expertise comptable et en faire un véritable levier de croissance stratégique pour les entrepreneurs modernes.
+                    Nous avons fondé ce cabinet pour dépoussiérer l&apos;image de l&apos;expertise comptable et en faire un véritable levier de croissance stratégique pour les entrepreneurs modernes.
                 </p>
             </div>
         </div>

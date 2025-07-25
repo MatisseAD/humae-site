@@ -49,7 +49,7 @@ export default function FulllPage() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.7 }}
                     >
-                        <span className="text-base font-semibold text-humae-violet">L'OUTIL PARTENAIRE DE VOTRE RÉUSSITE</span>
+                        <span className="text-base font-semibold text-humae-violet">L&apos;OUTIL PARTENAIRE DE VOTRE RÉUSSITE</span>
                         <h1 className="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight">
                             Votre entreprise, dans votre poche.
                         </h1>
@@ -99,7 +99,7 @@ export default function FulllPage() {
                 <div className="container mx-auto max-w-3xl px-4 text-center">
                     <h2 className="text-3xl font-bold">Un outil puissant, <span className="text-humae-violet">un conseil humain</span></h2>
                     <p className="mt-6 text-lg text-gray-600">
-                        Fulll.io est un copilote exceptionnel, mais il ne remplace pas l'expertise. Chez Humae, nous utilisons les données de l'outil pour vous fournir des conseils proactifs et personnalisés. Nous analysons vos chiffres pour vous aider à prendre les meilleures décisions stratégiques.
+                        Fulll.io est un copilote exceptionnel, mais il ne remplace pas l&apos;expertise. Chez Humae, nous utilisons les données de l&apos;outil pour vous fournir des conseils proactifs et personnalisés. Nous analysons vos chiffres pour vous aider à prendre les meilleures décisions stratégiques.
                     </p>
                     <Button asChild size="lg" className="mt-8 bg-humae-violet hover:bg-humae-violet/90">
                         <Link href="/contact">Discutons de votre projet</Link>

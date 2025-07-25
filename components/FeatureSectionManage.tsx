@@ -25,7 +25,7 @@ const FeatureSectionManage = () => {
                             Votre gestion comptable, sans effort
                         </p>
                         <p className="mt-6 text-lg leading-8 text-gray-600">
-                            Votre comptabilité est assurée par Humae, cabinet inscrit à l'Ordre des Experts-Comptables.
+                            Votre comptabilité est assurée par Humae, cabinet inscrit à l&apos;Ordre des Experts-Comptables.
                         </p>
                         <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
                             {features.map((feature) => (

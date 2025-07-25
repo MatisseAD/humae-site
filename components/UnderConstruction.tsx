@@ -41,7 +41,7 @@ const UnderConstruction = () => {
                 transition={{ duration: 0.5, delay: 0.6 }}
             >
                 <Button asChild className="mt-8">
-                    <Link href="/">Retourner à l'accueil</Link>
+                    <Link href="/">Retourner à l&apos;accueil</Link>
                 </Button>
             </motion.div>
         </div>

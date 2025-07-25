@@ -18,7 +18,7 @@ const HeroSection = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
-                    L'expertise comptable, <br />
+                    L&apos;expertise comptable, <br />
                     <span className="text-[var(--humae-violet)]">réinventée pour les entrepreneurs</span>
                 </motion.h1>
 

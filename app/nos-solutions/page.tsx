@@ -59,7 +59,7 @@ export default function NosSolutionsPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                     >
-                        Que vous soyez créateur, freelance ou dirigeant, nous avons l'expertise pour vous accompagner à chaque étape de votre développement.
+                        Que vous soyez créateur, freelance ou dirigeant, nous avons l&apos;expertise pour vous accompagner à chaque étape de votre développement.
                     </motion.p>
                 </div>
             </section>

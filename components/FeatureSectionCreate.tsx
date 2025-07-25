@@ -39,7 +39,7 @@ const FeatureSectionCreate = () => {
                                 Laissez-nous vous propulser
                             </p>
                             <p className="mt-4 sm:mt-6 text-base sm:text-lg leading-7 sm:leading-8 text-gray-600">
-                                Votre création d'entreprise entièrement prise en main, du choix de la structure à la gestion des démarches.
+                                Votre création d&apos;entreprise entièrement prise en main, du choix de la structure à la gestion des démarches.
                             </p>
 
                             {/* Features List */}

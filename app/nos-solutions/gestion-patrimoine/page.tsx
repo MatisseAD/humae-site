@@ -147,7 +147,7 @@ export default function GestionPatrimoinePage() {
                             Commençons par une conversation.
                         </h2>
                         <p className="mt-4 text-lg text-[#F0F5F2]/70 max-w-2xl mx-auto">
-                            Le meilleur moyen de savoir si nous pouvons vous aider est d'en discuter.
+                            Le meilleur moyen de savoir si nous pouvons vous aider est d&apos;en discuter.
                         </p>
                         <Button asChild size="lg" className="mt-10 bg-[#2ECC71] text-[#1A3A31] text-lg hover:bg-[#2ECC71]/90">
                             <a href="https://selenita.fr" target="_blank" rel="noopener noreferrer">
