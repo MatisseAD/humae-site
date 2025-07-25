@@ -1,7 +1,9 @@
 
-import type { Metadata } from 'next';
+import type { Metadata } from 'next'
 import { TeamCard } from '@/components/TeamCard'
 import { getTeam } from '@/lib/teamService'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
     title: 'Notre Équipe - Le Cabinet Humae',
