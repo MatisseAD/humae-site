@@ -47,8 +47,8 @@ export default function GestionPatrimoinePage() {
     const textY = useTransform(scrollYProgress, [0, 1], ["0%", "150%"]);
 
     return (
-        // On utilise un fond vert sombre pour le thème de la page
-        <div className="bg-[#9BBEA9] text-[#F0F5F2]">
+        // Nouvelle palette plus douce
+        <div className="bg-[#E6E6FA] text-[#BC6CA7]">
 
             {/* Section Héros avec effet Parallax */}
             <section ref={heroRef} className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden">
@@ -77,7 +77,7 @@ export default function GestionPatrimoinePage() {
                         ))}
                     </motion.h1>
                     <motion.p
-                        className="mt-6 text-lg text-[#F0F5F2]/80 max-w-2xl mx-auto"
+                        className="mt-6 text-lg text-[#BC6CA7]/80 max-w-2xl mx-auto"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 1.2 }}
@@ -88,10 +88,10 @@ export default function GestionPatrimoinePage() {
             </section>
 
             {/* Section Introduction Selenita */}
-            <section className="py-24 bg-black/20">
+            <section className="py-24 bg-[#BC6CA7]/10">
                 <div className="container mx-auto px-4 max-w-4xl text-center">
                     <motion.h2
-                        className="text-4xl font-bold text-[#2ECC71]" // Accent vert vibrant
+                        className="text-4xl font-bold text-[#FFAD4F]"
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true, amount: 0.5 }}
@@ -100,7 +100,7 @@ export default function GestionPatrimoinePage() {
                         Selenita Patrimoine
                     </motion.h2>
                     <motion.p
-                        className="mt-6 text-xl text-[#F0F5F2]/80"
+                        className="mt-6 text-xl text-[#BC6CA7]/80"
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true, amount: 0.5 }}
@@ -118,15 +118,15 @@ export default function GestionPatrimoinePage() {
                         {expertiseAreas.map((area, index) => (
                             <motion.div
                                 key={area.name}
-                                className="p-8 border border-white/10 rounded-lg bg-white/5"
+                                className="p-8 border border-[#BC6CA7]/20 rounded-lg bg-[#F8D6B8]"
                                 initial={{ opacity: 0, y: 50 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.5 }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                             >
-                                <area.icon className="w-10 h-10 text-[#2ECC71]" />
+                                <area.icon className="w-10 h-10 text-[#9BBEA9]" />
                                 <h3 className="text-2xl font-bold mt-6">{area.name}</h3>
-                                <p className="mt-4 text-[#F0F5F2]/70">{area.text}</p>
+                                <p className="mt-4 text-[#BC6CA7]/80">{area.text}</p>
                             </motion.div>
                         ))}
                     </div>
@@ -142,14 +142,14 @@ export default function GestionPatrimoinePage() {
                         viewport={{ once: true, amount: 0.5 }}
                         transition={{ duration: 0.7 }}
                     >
-                        <ChatBubbleLeftRightIcon className="w-12 h-12 mx-auto text-[#2ECC71]" />
+                        <ChatBubbleLeftRightIcon className="w-12 h-12 mx-auto text-[#9BBEA9]" />
                         <h2 className="mt-6 text-3xl md:text-4xl font-bold">
                             Commençons par une conversation.
                         </h2>
-                        <p className="mt-4 text-lg text-[#F0F5F2]/70 max-w-2xl mx-auto">
+                        <p className="mt-4 text-lg text-[#BC6CA7]/70 max-w-2xl mx-auto">
                             Le meilleur moyen de savoir si nous pouvons vous aider est d&apos;en discuter.
                         </p>
-                        <Button asChild size="lg" className="mt-10 bg-[#2ECC71] text-[#1A3A31] text-lg hover:bg-[#2ECC71]/90">
+                        <Button asChild size="lg" className="mt-10 bg-[#FFAD4F] text-[#E6E6FA] text-lg hover:bg-[#FFAD4F]/90">
                             <a href="https://selenita.fr" target="_blank" rel="noopener noreferrer">
                                 Visiter Selenita Patrimoine
                                 <ArrowUpRightIcon className="w-5 h-5 ml-2" />

@@ -142,54 +142,57 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="p-8 max-w-2xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold mb-4 text-center">Dashboard Équipe</h1>
-      <div className="bg-white shadow rounded p-6 space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <input className="border p-2 w-full" placeholder="Nom" name="name" value={form.name} onChange={handleChange} />
-          <input className="border p-2 w-full" placeholder="Rôle" name="role" value={form.role} onChange={handleChange} />
-          <input type="file" className="border p-2 w-full" onChange={handleFileChange} />
-          <input className="border p-2 w-full" placeholder="LinkedIn" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} />
-        </div>
-        {preview && (<Image width={800} height={400} src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
-        <Button className="text-white px-4 py-2 rounded hover:cursor-pointer" variant={"humae"} onClick={saveMember}>{editingId ? 'Enregistrer' : 'Ajouter'}</Button>
-      </div>
-      <ul className="space-y-2">
-        {team.map(member => (
-          <li key={member.id} className="flex items-center justify-between border p-2 rounded">
-            <div className="flex items-center space-x-2 cursor-pointer flex-1" onClick={() => { setForm({ name: member.name, role: member.role, imageSrc: member.imageSrc, linkedinUrl: member.linkedinUrl || '' }); setEditingId(member.id); setPreview(member.imageSrc); }}>
-              <img src={member.imageSrc} alt={member.name} className="w-12 h-12 rounded-full object-cover" />
-              <span>{member.name}</span>
-            </div>
-            <Button className="hover:cursor-pointer" variant={"humae"} onClick={() => deleteMember(member.id)}>Supprimer</Button>
-          </li>
-      ))}
-      </ul>
+    <div className="p-8 max-w-6xl mx-auto space-y-6">
+      <h1 className="text-3xl font-bold mb-6 text-center">Tableau de bord</h1>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <section className="bg-white shadow rounded p-6 space-y-4">
+          <h2 className="text-xl font-bold">Équipe</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input className="border p-2 w-full" placeholder="Nom" name="name" value={form.name} onChange={handleChange} />
+            <input className="border p-2 w-full" placeholder="Rôle" name="role" value={form.role} onChange={handleChange} />
+            <input type="file" className="border p-2 w-full" onChange={handleFileChange} />
+            <input className="border p-2 w-full" placeholder="LinkedIn" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} />
+          </div>
+          {preview && (<Image width={800} height={400} src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
+          <Button className="text-white px-4 py-2 rounded hover:cursor-pointer" variant={"humae"} onClick={saveMember}>{editingId ? 'Enregistrer' : 'Ajouter'}</Button>
+          <ul className="space-y-2">
+            {team.map(member => (
+              <li key={member.id} className="flex items-center justify-between border p-2 rounded">
+                <div className="flex items-center space-x-2 cursor-pointer flex-1" onClick={() => { setForm({ name: member.name, role: member.role, imageSrc: member.imageSrc, linkedinUrl: member.linkedinUrl || '' }); setEditingId(member.id); setPreview(member.imageSrc); }}>
+                  <img src={member.imageSrc} alt={member.name} className="w-12 h-12 rounded-full object-cover" />
+                  <span>{member.name}</span>
+                </div>
+                <Button className="hover:cursor-pointer" variant={"humae"} onClick={() => deleteMember(member.id)}>Supprimer</Button>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-      <h2 className="text-xl font-bold mt-8">Actualités</h2>
-      <div className="space-y-2 bg-white shadow rounded p-4 mt-2">
-        <div className="grid grid-cols-1 gap-2">
-          <input className="border p-2 w-full" placeholder="Titre" value={newsForm.title} onChange={e => setNewsForm({ ...newsForm, title: e.target.value })} />
-          <input className="border p-2 w-full" placeholder="Sujet" value={newsForm.subject} onChange={e => setNewsForm({ ...newsForm, subject: e.target.value })} />
-          <textarea className="border p-2 w-full" placeholder="Contenu" value={newsForm.content} onChange={e => setNewsForm({ ...newsForm, content: e.target.value })} />
-          <input type="file" className="border p-2 w-full" onChange={handleNewsFileChange} />
-        </div>
-        {newsPreview && (<Image width={800} height={400} src={newsPreview} alt="preview" className="w-32 h-32 object-cover" />)}
-        <Button className="hover:cursor-pointer" variant="humae" onClick={saveNews}>{editingNewsId ? 'Enregistrer' : 'Ajouter'}</Button>
+        <section className="bg-white shadow rounded p-6 space-y-4">
+          <h2 className="text-xl font-bold">Actualités</h2>
+          <div className="grid grid-cols-1 gap-2">
+            <input className="border p-2 w-full" placeholder="Titre" value={newsForm.title} onChange={e => setNewsForm({ ...newsForm, title: e.target.value })} />
+            <input className="border p-2 w-full" placeholder="Sujet" value={newsForm.subject} onChange={e => setNewsForm({ ...newsForm, subject: e.target.value })} />
+            <textarea className="border p-2 w-full" placeholder="Contenu" value={newsForm.content} onChange={e => setNewsForm({ ...newsForm, content: e.target.value })} />
+            <input type="file" className="border p-2 w-full" onChange={handleNewsFileChange} />
+          </div>
+          {newsPreview && (<Image width={800} height={400} src={newsPreview} alt="preview" className="w-32 h-32 object-cover" />)}
+          <Button className="hover:cursor-pointer" variant="humae" onClick={saveNews}>{editingNewsId ? 'Enregistrer' : 'Ajouter'}</Button>
+          <ul className="space-y-1 mt-2">
+            {news.map(n => (
+              <li key={n.id} className="flex justify-between border p-2 rounded">
+                <div className="flex-1 cursor-pointer" onClick={() => { setNewsForm({ title: n.title, subject: n.subject, content: n.content, imageSrc: n.imageSrc }); setEditingNewsId(n.id); setNewsPreview(n.imageSrc); }}>
+                  {n.title}
+                </div>
+                <button className="text-red-500" onClick={async () => deleteNewsItem(n.id)}>Supprimer</button>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
-      <ul className="space-y-1 mt-2">
-        {news.map(n => (
-          <li key={n.id} className="flex justify-between border p-2 rounded">
-            <div className="flex-1 cursor-pointer" onClick={() => { setNewsForm({ title: n.title, subject: n.subject, content: n.content, imageSrc: n.imageSrc }); setEditingNewsId(n.id); setNewsPreview(n.imageSrc); }}>
-              {n.title}
-            </div>
-            <button className="text-red-500" onClick={async () => deleteNewsItem(n.id)}>Supprimer</button>
-          </li>
-        ))}
-      </ul>
 
-      <h2 className="text-xl font-bold mt-8">Utilisateurs</h2>
-      <div className="space-y-2 bg-white shadow rounded p-4 mt-2">
+      <section className="bg-white shadow rounded p-6 space-y-4">
+        <h2 className="text-xl font-bold">Utilisateurs</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           <input className="border p-2 w-full" placeholder="Nom d'utilisateur" value={userForm.username} onChange={e => setUserForm({ ...userForm, username: e.target.value })} />
           <input className="border p-2 w-full" placeholder="Mot de passe" type="password" value={userForm.password} onChange={e => setUserForm({ ...userForm, password: e.target.value })} />
@@ -203,15 +206,15 @@ export default function AdminDashboard() {
           const res = await fetch('/api/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userForm) })
           if(res.ok){ const u = await res.json(); setUsers([...users, u]); setUserForm({ username: '', password: '', memberId: '' }) }
         }}>Créer utilisateur</Button>
-      </div>
-      <ul className="space-y-1 mt-2">
-        {users.map(u => (
-          <li key={u.id} className="flex justify-between border p-2 rounded">
-            <span>{u.username} - {team.find(t => t.id === u.memberId)?.name}</span>
-            <button className="text-red-500" onClick={async () => { await fetch(`/api/users/${u.id}`, { method: 'DELETE' }); setUsers(users.filter(us => us.id !== u.id)) }}>Supprimer</button>
-          </li>
-        ))}
-      </ul>
+        <ul className="space-y-1 mt-2">
+          {users.map(u => (
+            <li key={u.id} className="flex justify-between border p-2 rounded">
+              <span>{u.username} - {team.find(t => t.id === u.memberId)?.name}</span>
+              <button className="text-red-500" onClick={async () => { await fetch(`/api/users/${u.id}`, { method: 'DELETE' }); setUsers(users.filter(us => us.id !== u.id)) }}>Supprimer</button>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   )
 }
