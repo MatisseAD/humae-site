@@ -1,8 +1,4 @@
-import crypto from "crypto"
-import { promises as fs } from 'fs'
-import path from 'path'
-
-const dataFile = path.join(process.cwd(), 'lib', 'newsData.json')
+import { supabase } from './supabaseClient'
 
 export interface NewsItem {
   id: string
@@ -12,46 +8,31 @@ export interface NewsItem {
   imageSrc: string
 }
 
-async function readData(): Promise<NewsItem[]> {
-  try {
-    const data = await fs.readFile(dataFile, 'utf-8')
-    return JSON.parse(data) as NewsItem[]
-  } catch {
-    return []
-  }
-}
-
-async function writeData(data: NewsItem[]) {
-  await fs.writeFile(dataFile, JSON.stringify(data, null, 2))
-}
-
 export async function getNews(): Promise<NewsItem[]> {
-  return readData()
+  const { data, error } = await supabase.from('news').select('*').order('id')
+  if (error) throw new Error(error.message)
+  return data as NewsItem[]
 }
 
 export async function getNewsItem(id: string): Promise<NewsItem | null> {
-  const data = await readData()
-  return data.find(n => n.id === id) || null
+  const { data, error } = await supabase.from('news').select('*').eq('id', id).single()
+  if (error && error.code !== 'PGRST116') throw new Error(error.message)
+  return data as NewsItem | null
 }
 
 export async function addNews(item: Omit<NewsItem, 'id'>) {
-  const data = await readData()
-  const newItem: NewsItem = { id: crypto.randomUUID(), ...item }
-  data.push(newItem)
-  await writeData(data)
-  return newItem
+  const { data, error } = await supabase.from('news').insert(item).select().single()
+  if (error) throw new Error(error.message)
+  return data as NewsItem
 }
 
 export async function updateNews(id: string, updates: Partial<Omit<NewsItem, 'id'>>) {
-  const data = await readData()
-  const index = data.findIndex(n => n.id === id)
-  if (index === -1) throw new Error('News not found')
-  data[index] = { ...data[index], ...updates }
-  await writeData(data)
-  return data[index]
+  const { data, error } = await supabase.from('news').update(updates).eq('id', id).select().single()
+  if (error) throw new Error(error.message)
+  return data as NewsItem
 }
 
 export async function deleteNews(id: string) {
-  const data = await readData()
-  await writeData(data.filter(n => n.id !== id))
+  const { error } = await supabase.from('news').delete().eq('id', id)
+  if (error) throw new Error(error.message)
 }

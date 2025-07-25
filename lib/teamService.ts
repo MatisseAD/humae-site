@@ -1,7 +1,4 @@
-import { promises as fs } from 'fs'
-import path from 'path'
-
-const dataFile = path.join(process.cwd(), 'lib', 'teamData.json')
+import { supabase } from './supabaseClient'
 
 export interface TeamMember {
   id: string
@@ -11,42 +8,25 @@ export interface TeamMember {
   linkedinUrl?: string
 }
 
-async function readData(): Promise<TeamMember[]> {
-  try {
-    const data = await fs.readFile(dataFile, 'utf-8')
-    return JSON.parse(data) as TeamMember[]
-  } catch (err) {
-    return []
-  }
-}
-
-async function writeData(data: TeamMember[]) {
-  await fs.writeFile(dataFile, JSON.stringify(data, null, 2))
-}
-
 export async function getTeam(): Promise<TeamMember[]> {
-  return readData()
+  const { data, error } = await supabase.from('team').select('*').order('id')
+  if (error) throw new Error(error.message)
+  return data as TeamMember[]
 }
 
 export async function addMember(member: Omit<TeamMember, 'id'>) {
-  const data = await readData()
-  const newMember: TeamMember = { id: crypto.randomUUID(), ...member }
-  data.push(newMember)
-  await writeData(data)
-  return newMember
+  const { data, error } = await supabase.from('team').insert(member).select().single()
+  if (error) throw new Error(error.message)
+  return data as TeamMember
 }
 
 export async function updateMember(id: string, updates: Partial<Omit<TeamMember, 'id'>>) {
-  const data = await readData()
-  const index = data.findIndex(m => m.id === id)
-  if (index === -1) throw new Error('Member not found')
-  data[index] = { ...data[index], ...updates }
-  await writeData(data)
-  return data[index]
+  const { data, error } = await supabase.from('team').update(updates).eq('id', id).select().single()
+  if (error) throw new Error(error.message)
+  return data as TeamMember
 }
 
 export async function deleteMember(id: string) {
-  const data = await readData()
-  const filtered = data.filter(m => m.id !== id)
-  await writeData(filtered)
+  const { error } = await supabase.from('team').delete().eq('id', id)
+  if (error) throw new Error(error.message)
 }

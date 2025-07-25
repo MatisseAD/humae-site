@@ -1,8 +1,5 @@
-import { promises as fs } from 'fs'
-import path from 'path'
 import crypto from 'crypto'
-
-const dataFile = path.join(process.cwd(), 'lib', 'userData.json')
+import { supabase } from './supabaseClient'
 
 export interface User {
   id: string
@@ -11,47 +8,40 @@ export interface User {
   passwordHash: string
 }
 
-async function readData(): Promise<User[]> {
-  try {
-    const data = await fs.readFile(dataFile, 'utf-8')
-    return JSON.parse(data) as User[]
-  } catch {
-    return []
-  }
-}
-
-async function writeData(data: User[]) {
-  await fs.writeFile(dataFile, JSON.stringify(data, null, 2))
-}
-
 export async function getUsers(): Promise<User[]> {
-  return readData()
+  const { data, error } = await supabase.from('users').select('*').order('id')
+  if (error) throw new Error(error.message)
+  return data as User[]
 }
 
 export async function addUser(user: Omit<User, 'id' | 'passwordHash'> & { password: string }) {
-  const data = await readData()
   const passwordHash = crypto.createHash('sha256').update(user.password).digest('hex')
-  const newUser: User = { id: crypto.randomUUID(), username: user.username, memberId: user.memberId, passwordHash }
-  data.push(newUser)
-  await writeData(data)
-  return newUser
+  const { data, error } = await supabase.from('users').insert({
+    username: user.username,
+    memberId: user.memberId,
+    passwordHash,
+  }).select().single()
+  if (error) throw new Error(error.message)
+  return data as User
 }
 
 export async function deleteUser(id: string) {
-  const data = await readData()
-  await writeData(data.filter(u => u.id !== id))
+  const { error } = await supabase.from('users').delete().eq('id', id)
+  if (error) throw new Error(error.message)
 }
 
 export async function authenticate(username: string, password: string): Promise<User | null> {
-  const data = await readData()
-  const user = data.find(u => u.username === username)
-  if (!user) return null
   const hash = crypto.createHash('sha256').update(password).digest('hex')
-  if (hash === user.passwordHash) return user
-  return null
+  const { data, error } = await supabase.from('users').select('*').eq('username', username).eq('passwordHash', hash).single()
+  if (error) {
+    if (error.code === 'PGRST116') return null
+    throw new Error(error.message)
+  }
+  return data as User | null
 }
 
 export async function getUser(id: string): Promise<User | null> {
-  const data = await readData()
-  return data.find(u => u.id === id) || null
+  const { data, error } = await supabase.from('users').select('*').eq('id', id).single()
+  if (error && error.code !== 'PGRST116') throw new Error(error.message)
+  return data as User | null
 }

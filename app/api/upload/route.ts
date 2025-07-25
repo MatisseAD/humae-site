@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { promises as fs } from 'fs'
-import path from 'path'
+import { supabase } from '@/lib/supabaseClient'
 
 export async function POST(req: NextRequest) {
   const { file, filename, folder = 'team' } = await req.json()
@@ -9,10 +8,14 @@ export async function POST(req: NextRequest) {
   }
   const data = file.split(',')[1]
   const buffer = Buffer.from(data, 'base64')
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads', folder)
-  await fs.mkdir(uploadDir, { recursive: true })
-  const filePath = path.join(uploadDir, filename)
-  await fs.writeFile(filePath, buffer)
-  const publicPath = `/uploads/${folder}/${filename}`
-  return NextResponse.json({ path: publicPath })
+  const path = `${folder}/${filename}`
+  const { error } = await supabase.storage.from('uploads').upload(path, buffer, {
+    upsert: true,
+    contentType: 'image/jpeg'
+  })
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 400 })
+  }
+  const { data: publicData } = supabase.storage.from('uploads').getPublicUrl(path)
+  return NextResponse.json({ path: publicData.publicUrl })
 }
