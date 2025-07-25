@@ -151,7 +151,7 @@ export default function AdminDashboard() {
           <input type="file" className="border p-2 w-full" onChange={handleFileChange} />
           <input className="border p-2 w-full" placeholder="LinkedIn" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} />
         </div>
-        {preview && (<Image src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
+        {preview && (<Image width={800} height={400} src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
         <Button className="text-white px-4 py-2 rounded hover:cursor-pointer" variant={"humae"} onClick={saveMember}>{editingId ? 'Enregistrer' : 'Ajouter'}</Button>
       </div>
       <ul className="space-y-2">
@@ -174,7 +174,7 @@ export default function AdminDashboard() {
           <textarea className="border p-2 w-full" placeholder="Contenu" value={newsForm.content} onChange={e => setNewsForm({ ...newsForm, content: e.target.value })} />
           <input type="file" className="border p-2 w-full" onChange={handleNewsFileChange} />
         </div>
-        {newsPreview && (<Image src={newsPreview} alt="preview" className="w-32 h-32 object-cover" />)}
+        {newsPreview && (<Image width={800} height={400} src={newsPreview} alt="preview" className="w-32 h-32 object-cover" />)}
         <Button className="hover:cursor-pointer" variant="humae" onClick={saveNews}>{editingNewsId ? 'Enregistrer' : 'Ajouter'}</Button>
       </div>
       <ul className="space-y-1 mt-2">

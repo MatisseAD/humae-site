@@ -9,8 +9,36 @@
   {
     "id": "2",
     "name": "Christian PERRIN",
-    "role": "Collaborateur Comptable",
+    "role": "Associé, Comptable",
     "imageSrc": "/assets/team/team-christian.jpg",
     "linkedinUrl": "#"
+  },
+  {
+    "id": "75d62003-05f2-4aa9-95a1-79de6173ad08",
+    "name": "jsp",
+    "role": "jsp",
+    "imageSrc": "/uploads/team/IMG_3256.JPEG",
+    "linkedinUrl": "jsp"
+  },
+  {
+    "id": "59554d5e-dca6-4d1d-b441-f3834f50c45b",
+    "name": "jspp",
+    "role": "jspp",
+    "imageSrc": "/uploads/team/IMG_3253.JPEG",
+    "linkedinUrl": "jspp"
+  },
+  {
+    "id": "b28e90ad-3344-4839-a81b-f4c9ba7b52f5",
+    "name": "jsppp",
+    "role": "jsppp",
+    "imageSrc": "/uploads/team/IMG_3255.JPEG",
+    "linkedinUrl": "jspp"
+  },
+  {
+    "id": "60db2a90-7002-4dd1-bff4-e31904b56f40",
+    "name": "Nicolas ROYER",
+    "role": "jsp",
+    "imageSrc": "",
+    "linkedinUrl": "jsp"
   }
 ]
