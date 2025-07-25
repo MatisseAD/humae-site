@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { TeamMember } from '@/lib/teamService'
 import { User } from '@/lib/userService'
+import {Button} from "@/components/ui/button";
 
 export default function AdminDashboard() {
   const [team, setTeam] = useState<TeamMember[]>([])
@@ -88,7 +89,7 @@ export default function AdminDashboard() {
           <input className="border p-2 w-full" placeholder="LinkedIn" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} />
         </div>
         {preview && (<img src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
-        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={saveMember}>{editingId ? 'Enregistrer' : 'Ajouter'}</button>
+        <Button className="text-white px-4 py-2 rounded hover:cursor-pointer" variant={"humae"} onClick={saveMember}>{editingId ? 'Enregistrer' : 'Ajouter'}</Button>
       </div>
       <ul className="space-y-2">
         {team.map(member => (
@@ -97,7 +98,7 @@ export default function AdminDashboard() {
               <img src={member.imageSrc} alt={member.name} className="w-12 h-12 rounded-full object-cover" />
               <span>{member.name}</span>
             </div>
-            <button className="text-red-500" onClick={() => deleteMember(member.id)}>Supprimer</button>
+            <Button className="hover:cursor-pointer" variant={"humae"} onClick={() => deleteMember(member.id)}>Supprimer</Button>
           </li>
         ))}
       </ul>
@@ -112,11 +113,11 @@ export default function AdminDashboard() {
             {team.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
           </select>
         </div>
-        <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={async () => {
+        <Button className="hover:cursor-pointer" variant={"humae"} onClick={async () => {
           if(!userForm.username || !userForm.password || !userForm.memberId) return;
           const res = await fetch('/api/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userForm) })
           if(res.ok){ const u = await res.json(); setUsers([...users, u]); setUserForm({ username: '', password: '', memberId: '' }) }
-        }}>Créer utilisateur</button>
+        }}>Créer utilisateur</Button>
       </div>
       <ul className="space-y-1 mt-2">
         {users.map(u => (
