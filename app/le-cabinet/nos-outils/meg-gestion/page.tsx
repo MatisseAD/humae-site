@@ -43,10 +43,10 @@ export default function MegPage() {
                     >
                         <span className="text-base font-semibold text-[var(--humae-violet)]">MON EXPERT EN GESTION</span>
                         <h1 className="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight">
-                            La gestion d'entreprise, enfin intuitive.
+                            La gestion d&apos;entreprise, enfin intuitive.
                         </h1>
                         <p className="mt-6 text-lg text-gray-600">
-                            Avec Humae, pilotez votre activité grâce à **MEG**, l'outil complet qui connecte votre entreprise à votre expert-comptable pour une gestion fluide et sans effort.
+                            Avec Humae, pilotez votre activité grâce à **MEG**, l&apos;outil complet qui connecte votre entreprise à votre expert-comptable pour une gestion fluide et sans effort.
                         </p>
                     </motion.div>
                     <motion.div
@@ -97,7 +97,7 @@ export default function MegPage() {
                 <SectionSeparator color="#f9fafb" variant="rounded" />
                 <div className="container mx-auto max-w-3xl px-4 text-center">
                     <CircleStackIcon className="w-12 h-12 mx-auto text-[var(--humae-orange)] mb-4" />
-                    <h2 className="text-3xl font-bold">L'outil ne fait pas tout. L'expert fait la différence.</h2>
+                    <h2 className="text-3xl font-bold">L&apos;outil ne fait pas tout. L&apos;expert fait la différence.</h2>
                     <p className="mt-6 text-lg text-gray-600">
                         MEG est une plateforme performante pour collecter et organiser vos données. Notre rôle chez Humae est de transformer ces données en stratégies gagnantes pour votre entreprise. Nous interprétons vos chiffres pour vous guider vers la croissance.
                     </p>

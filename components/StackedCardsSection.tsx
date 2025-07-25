@@ -58,7 +58,7 @@ const StackedCardsSection = () => {
         offset: ["start start", "end end"]
     });
 
-    const createCardAnimations = (index: number) => {
+    const useCardAnimations = (index: number) => {
         const segmentSize = 1 / cards.length;
         const start = index * segmentSize;
         const end = start + segmentSize;
@@ -70,12 +70,18 @@ const StackedCardsSection = () => {
         };
     };
 
+    const animations = [
+        useCardAnimations(0),
+        useCardAnimations(1),
+        useCardAnimations(2),
+    ];
+
     return (
         <section ref={containerRef} className="relative h-[300vh] bg-white">
             <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
                 <div className="w-full max-w-5xl mx-auto px-4 relative h-full flex items-center">
                     {cards.map((card, index) => {
-                        const animations = createCardAnimations(index);
+                        const animation = animations[index];
 
                         // RESPONSIVE: On réduit le décalage initial sur mobile
                         const initialTopOffset = index * 10;
@@ -87,9 +93,9 @@ const StackedCardsSection = () => {
                                 className="absolute left-0 right-0 mx-auto w-[90%] md:w-full max-w-4xl p-6 md:p-8 rounded-2xl shadow-2xl"
                                 style={{
                                     backgroundColor: card.bgColor,
-                                    y: animations.y,
-                                    opacity: animations.opacity,
-                                    scale: animations.scale,
+                                    y: animation.y,
+                                    opacity: animation.opacity,
+                                    scale: animation.scale,
                                     zIndex: cards.length - index,
                                     top: `${initialTopOffset}px`,
                                 }}

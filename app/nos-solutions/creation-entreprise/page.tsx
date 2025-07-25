@@ -47,7 +47,7 @@ export default function CreerMonEntreprisePage() {
                 >
                     <h1 className="text-4xl md:text-6xl font-extrabold">Donnez vie à votre projet.</h1>
                     <p className="mt-4 max-w-2xl mx-auto text-lg text-white/90">
-                        L'aventure entrepreneuriale commence ici. Nous sommes là pour la rendre plus simple.
+                        L&apos;aventure entrepreneuriale commence ici. Nous sommes là pour la rendre plus simple.
                     </p>
                 </motion.div>
             </section>
@@ -110,7 +110,7 @@ export default function CreerMonEntreprisePage() {
             <section className="py-24 text-center">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold">Prêt à lancer votre entreprise ?</h2>
-                    <p className="mt-4 text-lg text-gray-600">Le premier pas, c'est d'en discuter. Prenons rendez-vous.</p>
+                    <p className="mt-4 text-lg text-gray-600">Le premier pas, c&apos;est d&apos;en discuter. Prenons rendez-vous.</p>
                     {/* Remplacement de bg-humae-orange et du hover */}
                     <Button asChild size="lg" className="mt-8 bg-[var(--humae-orange)] hover:bg-[var(--humae-orange)] hover:bg-opacity-90">
                         <Link href="/contact?subject=Création d'entreprise">Planifier un appel</Link>

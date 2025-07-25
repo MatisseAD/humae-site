@@ -50,7 +50,7 @@ const KeyPointsSection = () => {
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                        L'accompagnement qui change tout
+                        L&apos;accompagnement qui change tout
                     </h2>
                     <p className="mt-4 text-lg text-gray-600">
                         Passez votre souris sur une carte pour en savoir plus.

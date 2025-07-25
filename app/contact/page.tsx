@@ -17,7 +17,7 @@ export default function ContactPage() {
             <div className="text-center mb-12">
                 <h1 className="text-4xl font-bold text-[var(--humae-violet)]">Contactez-nous</h1>
                 <p className="mt-4 text-lg text-gray-600">
-                    Une question ? Un projet ? N'hésitez pas à nous contacter.
+                    Une question ? Un projet ? N&apos;hésitez pas à nous contacter.
                 </p>
             </div>
 

@@ -46,16 +46,16 @@ export default function MentionsLegalesPage() {
                 <section>
                     <h2 className="text-2xl font-semibold mb-4 border-b pb-2">3. Protection des Données Personnelles</h2>
                     <p>
-                        Dans le cadre de l'utilisation du site, notamment via notre formulaire de contact ou notre simulateur, nous pouvons collecter des données personnelles vous concernant (nom, prénom, adresse e-mail, numéro de téléphone, etc.). Ces données sont collectées sur la base de votre consentement afin de répondre à vos demandes.
+                        Dans le cadre de l&apos;utilisation du site, notamment via notre formulaire de contact ou notre simulateur, nous pouvons collecter des données personnelles vous concernant (nom, prénom, adresse e-mail, numéro de téléphone, etc.). Ces données sont collectées sur la base de votre consentement afin de répondre à vos demandes.
                     </p>
                     <p className="mt-4">
-                        Conformément au Règlement (UE) 2016/679 (RGPD) et à la loi "Informatique et Libertés" du 6 janvier 1978 modifiée, vous disposez des droits suivants concernant vos données :
+                        Conformément au Règlement (UE) 2016/679 (RGPD) et à la loi &quot;Informatique et Libertés&quot; du 6 janvier 1978 modifiée, vous disposez des droits suivants concernant vos données :
                     </p>
                     <ul className="mt-4 space-y-2 list-disc list-inside">
-                        <li>Droit d'accès</li>
+                        <li>Droit d&apos;accès</li>
                         <li>Droit de rectification</li>
-                        <li>Droit à l'effacement (droit à l'oubli)</li>
-                        <li>Droit d'opposition</li>
+                        <li>Droit à l&apos;effacement (droit à l&apos;oubli)</li>
+                        <li>Droit d&apos;opposition</li>
                         <li>Droit à la limitation du traitement</li>
                         <li>Droit à la portabilité</li>
                     </ul>
@@ -70,18 +70,18 @@ export default function MentionsLegalesPage() {
                 <section>
                     <h2 className="text-2xl font-semibold mb-4 border-b pb-2">4. Propriété Intellectuelle</h2>
                     <p>
-                        L'ensemble de ce site (incluant, sans s'y limiter, la charte graphique, les textes, les logos, les photographies et les icônes) constitue une œuvre protégée par le droit d'auteur. Toute reproduction ou représentation, totale ou partielle, sans l'autorisation expresse de HUMAE SARL est interdite et constituerait une contrefaçon.
+                        L&apos;ensemble de ce site (incluant, sans s&apos;y limiter, la charte graphique, les textes, les logos, les photographies et les icônes) constitue une œuvre protégée par le droit d&apos;auteur. Toute reproduction ou représentation, totale ou partielle, sans l&apos;autorisation expresse de HUMAE SARL est interdite et constituerait une contrefaçon.
                     </p>
                 </section>
 
                 <section>
                     <h2 className="text-2xl font-semibold mb-4 border-b pb-2">5. Cookies</h2>
                     <p>
-                        Notre site utilise des cookies pour améliorer votre expérience de navigation et pour mesurer l'audience de manière anonyme.
+                        Notre site utilise des cookies pour améliorer votre expérience de navigation et pour mesurer l&apos;audience de manière anonyme.
                     </p>
                     <ul className="mt-4 space-y-2 list-disc list-inside">
                         <li><strong>Cookies strictement nécessaires :</strong> Ils sont indispensables au bon fonctionnement du site et ne peuvent pas être désactivés.</li>
-                        <li><strong>Cookies de performance et de mesure d'audience :</strong> Nous utilisons des outils d'analyse qui collectent des données de manière anonyme et respectueuse de la vie privée, sans stocker d'informations sur votre appareil.</li>
+                        <li><strong>Cookies de performance et de mesure d&apos;audience :</strong> Nous utilisons des outils d&apos;analyse qui collectent des données de manière anonyme et respectueuse de la vie privée, sans stocker d&apos;informations sur votre appareil.</li>
                     </ul>
                     <p className="mt-4">
                         Conformément à la législation, votre consentement est recueilli via un bandeau informatif lors de votre première visite pour tous les cookies non essentiels. Vous pouvez modifier vos préférences à tout moment depuis cette même interface.

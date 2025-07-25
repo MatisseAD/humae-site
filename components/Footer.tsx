@@ -54,7 +54,7 @@ export function Footer() {
                     <div>
                         <h4 className="font-semibold mb-4 text-black">Nos Solutions</h4>
                         <ul className="space-y-2 text-sm text-black">
-                            <li><Link href="/nos-solutions/creation-entreprise" className="hover:text-[#F18F01]">Création d'entreprise</Link></li>
+                            <li><Link href="/nos-solutions/creation-entreprise" className="hover:text-[#F18F01]">Création d&apos;entreprise</Link></li>
                             <li><Link href="/nos-solutions/gestion-comptable" className="hover:text-[#F18F01]">Gestion comptable</Link></li>
                             <li><Link href="/nos-solutions/devenir-freelance" className="hover:text-[#F18F01]">Devenir Freelance</Link></li>
                             <li><Link href="/nos-solutions/gestion-patrimoine" className="hover:text-[#F18F01]">Gestion de patrimoine</Link></li>

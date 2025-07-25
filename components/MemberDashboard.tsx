@@ -74,7 +74,7 @@ export default function MemberDashboard({ userId }: { userId: string }) {
           placeholder="Lien LinkedIn"
         />
         <input type="file" className="border p-2 w-full" onChange={handleFileChange} />
-        {preview && <img src={preview} className="w-32 h-32 object-cover rounded-full" />}
+        {preview && <img src={preview} alt="Aperçu" className="w-32 h-32 object-cover rounded-full" />}
         <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={save}>Enregistrer</button>
       </div>
     </div>

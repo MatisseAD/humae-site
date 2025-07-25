@@ -15,11 +15,11 @@ export default function NotFound() {
             </h2>
 
             <p className="mt-2 max-w-md text-black">
-                La page que vous essayez de joindre n'existe pas, a été déplacée ou est temporairement indisponible.
+                La page que vous essayez de joindre n&apos;existe pas, a été déplacée ou est temporairement indisponible.
             </p>
 
             <Button asChild className="mt-8">
-                <Link href="/">Retourner à l'accueil</Link>
+                <Link href="/">Retourner à l&apos;accueil</Link>
             </Button>
         </div>
     );

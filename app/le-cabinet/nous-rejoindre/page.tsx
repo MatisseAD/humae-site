@@ -23,10 +23,10 @@ export default function NousRejoindrePage() {
 
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-                        Rejoignez l'aventure Humae
+                        Rejoignez l&apos;aventure Humae
                     </h2>
                     <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-                        Nous cherchons des personnes passionnées, qui partagent nos valeurs de proximité et de clarté, pour réinventer ensemble le métier de l'expertise comptable.
+                        Nous cherchons des personnes passionnées, qui partagent nos valeurs de proximité et de clarté, pour réinventer ensemble le métier de l&apos;expertise comptable.
                     </p>
                 </div>
 
@@ -52,7 +52,7 @@ export default function NousRejoindrePage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-center text-gray-500 py-8">Il n'y a pas d'offres d'emploi pour le moment, mais nous sommes toujours ouverts aux candidatures spontanées !</p>
+                            <p className="text-center text-gray-500 py-8">Il n&apos;y a pas d&apos;offres d&apos;emploi pour le moment, mais nous sommes toujours ouverts aux candidatures spontanées !</p>
                         )}
                     </TabsContent>
                 </Tabs>

@@ -73,7 +73,7 @@ export function TestimonialSection() {
                                                 height={80}
                                                 className="rounded-full mb-4"
                                             />
-                                            <p className="text-gray-600 italic">"{testimonial.quote}"</p>
+                                            <p className="text-gray-600 italic">&ldquo;{testimonial.quote}&rdquo;</p>
                                             <div className="mt-4">
                                                 <p className="font-bold text-gray-900">{testimonial.name}</p>
                                                 <p className="text-sm text-humae-violet">{testimonial.role}</p>
