@@ -16,6 +16,12 @@ import {
 } from '@/components/ui/navigation-menu';
 import { Button } from '@/components/ui/button';
 import {
+    Accordion,
+    AccordionItem,
+    AccordionTrigger,
+    AccordionContent,
+} from '@/components/ui/accordion';
+import {
     BuildingStorefrontIcon,
     UserCircleIcon,
     CalculatorIcon,
@@ -29,6 +35,8 @@ import {
     UserGroupIcon,
     BriefcaseIcon,
     SparklesIcon,
+    Bars3Icon,
+    XMarkIcon,
 } from '@heroicons/react/24/outline';
 import Image from "next/image";
 
@@ -122,12 +130,25 @@ const outils: { title: string; href: string; description: string, icon: React.El
 ];
 
 export function Navbar() {
+    const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     return (
-        <header className="flex items-center justify-between p-4 border-b">
+        <>
+        <header className="flex items-center justify-between p-4 border-b relative">
             <Link href="/" className="font-bold text-lg">
                 <Image src="/assets/logo.png" alt="Logo Humae" width={90} height={46} />
             </Link>
-            <NavigationMenu>
+            <button
+                className="md:hidden"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle navigation"
+            >
+                {mobileMenuOpen ? (
+                    <XMarkIcon className="w-6 h-6" />
+                ) : (
+                    <Bars3Icon className="w-6 h-6" />
+                )}
+            </button>
+            <NavigationMenu className="hidden md:block">
                 <NavigationMenuList>
 
                     {/* Menu "Nos Solutions" */}
@@ -206,12 +227,74 @@ export function Navbar() {
                 </NavigationMenuList>
             </NavigationMenu>
 
-            <Button className="text-white" variant="humae" asChild>
+            <Button className="hidden md:inline-flex text-white" variant="humae" asChild>
                 <Link target="_blank" href="https://humae.fulll.io">
                     Espace client
                 </Link>
             </Button>
         </header>
+        {mobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-white border-b shadow z-50">
+                <Accordion type="multiple" className="w-full">
+                    <AccordionItem value="solutions">
+                        <AccordionTrigger className="px-4 py-2">Nos Solutions</AccordionTrigger>
+                        <AccordionContent>
+                            <ul className="flex flex-col space-y-1 pb-2">
+                                {solutions.map((item) => (
+                                    <li key={item.title}>
+                                        <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-1">
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="cabinet">
+                        <AccordionTrigger className="px-4 py-2">Le Cabinet</AccordionTrigger>
+                        <AccordionContent>
+                            <ul className="flex flex-col space-y-1 pb-2">
+                                {cabinet.map((item) => (
+                                    <li key={item.title}>
+                                        <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-1">
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="outils">
+                        <AccordionTrigger className="px-4 py-2">Outils</AccordionTrigger>
+                        <AccordionContent>
+                            <ul className="flex flex-col space-y-1 pb-2">
+                                {outils.map((item) => (
+                                    <li key={item.title}>
+                                        <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-1">
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <div className="px-4 py-2">
+                        <Link href="/actu" onClick={() => setMobileMenuOpen(false)} className="block py-2">Actualités</Link>
+                    </div>
+                    <div className="px-4 py-2">
+                        <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block py-2">Contact</Link>
+                    </div>
+                    <div className="p-4">
+                        <Button className="w-full text-white" variant="humae" asChild>
+                            <Link target="_blank" href="https://humae.fulll.io" onClick={() => setMobileMenuOpen(false)}>
+                                Espace client
+                            </Link>
+                        </Button>
+                    </div>
+                </Accordion>
+            </div>
+        )}
+        </>
     );
 }
 
