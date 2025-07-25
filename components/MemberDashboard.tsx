@@ -37,7 +37,7 @@ export default function MemberDashboard({ userId }: { userId: string }) {
           const res = await fetch('/api/upload', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ file: reader.result, filename: imageFile.name })
+            body: JSON.stringify({ file: reader.result, filename: imageFile.name, folder: 'team' })
           })
           const data = await res.json()
           resolve(data.path)
