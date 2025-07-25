@@ -91,14 +91,22 @@ export default function AdminDashboard() {
     const imageSrc = await uploadImage()
     const payload = { ...form, imageSrc }
     if (editingId) {
-      const res = await fetch(`/api/team/${editingId}`, { method: 'PUT', body: JSON.stringify(payload) })
+      const res = await fetch(`/api/team/${editingId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
       if (res.ok) {
         const updated = await res.json()
         setTeam(team.map(t => t.id === editingId ? updated : t))
         setEditingId(null)
       }
     } else {
-      const res = await fetch('/api/team', { method: 'POST', body: JSON.stringify(payload) })
+      const res = await fetch('/api/team', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
       if (res.ok) {
         const newMember = await res.json()
         setTeam([...team, newMember])
@@ -118,14 +126,22 @@ export default function AdminDashboard() {
     const imageSrc = await uploadNewsImage()
     const payload = { ...newsForm, imageSrc }
     if (editingNewsId) {
-      const res = await fetch(`/api/news/${editingNewsId}`, { method: 'PUT', body: JSON.stringify(payload) })
+      const res = await fetch(`/api/news/${editingNewsId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
       if (res.ok) {
         const updated = await res.json()
         setNews(news.map(n => n.id === editingNewsId ? updated : n))
         setEditingNewsId(null)
       }
     } else {
-      const res = await fetch('/api/news', { method: 'POST', body: JSON.stringify(payload) })
+      const res = await fetch('/api/news', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
       if (res.ok) {
         const item = await res.json()
         setNews([...news, item])
