@@ -48,7 +48,7 @@ export default function GestionPatrimoinePage() {
 
     return (
         // On utilise un fond vert sombre pour le thème de la page
-        <div className="bg-[#1A3A31] text-[#F0F5F2]">
+        <div className="bg-[#9BBEA9] text-[#F0F5F2]">
 
             {/* Section Héros avec effet Parallax */}
             <section ref={heroRef} className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden">

@@ -64,34 +64,34 @@ export function ApplicationForm() {
                 )} />
 
                 <FormField name="cv" control={form.control} render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Curriculum Vitae (PDF, 5MB max)</FormLabel>
-                        <FormControl>
-                            <>
-                                <Input
-                                    type="file"
-                                    className="hidden"
-                                    accept=".pdf"
-                                    {...fileInputRef}
-                                    onChange={(event) => {
-                                        field.onChange(event.target.files);
-                                        setFileName(event.target.files?.[0]?.name || null);
-                                    }}
-                                />
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    className="w-full justify-start text-left font-normal"
-                                    onClick={() => (document.getElementById('cv-input')?.click())} // On simule le clic
-                                >
-                                    <PaperClipIcon className="w-5 h-5 mr-2" />
-                                    {fileName || 'Cliquez pour choisir un fichier'}
-                                </Button>
-                            </>
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )} />
+    <FormItem>
+        <FormLabel>Curriculum Vitae (PDF, 5MB max)</FormLabel>
+        <FormControl>
+            <div>
+                <Input
+                    type="file"
+                    className="hidden"
+                    accept=".pdf"
+                    {...fileInputRef}
+                    onChange={(event) => {
+                        field.onChange(event.target.files);
+                        setFileName(event.target.files?.[0]?.name || null);
+                    }}
+                />
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full justify-start text-left font-normal"
+                    onClick={() => (document.getElementById('cv-input')?.click())}
+                >
+                    <PaperClipIcon className="w-5 h-5 mr-2" />
+                    {fileName || 'Cliquez pour choisir un fichier'}
+                </Button>
+            </div>
+        </FormControl>
+        <FormMessage />
+    </FormItem>
+)} />
                 <input type="file" id="cv-input" className="hidden" {...fileInputRef} />
 
                 <FormField name="coverLetter" control={form.control} render={({ field }) => (
