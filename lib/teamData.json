@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "Céline MONIN",
+    "role": "Expert-Comptable, Gérante",
+    "imageSrc": "/assets/team/team-celine.jpg",
+    "linkedinUrl": "https://fr.linkedin.com/in/celine-monin-a68805ba"
+  },
+  {
+    "id": "2",
+    "name": "Christian PERRIN",
+    "role": "Collaborateur Comptable",
+    "imageSrc": "/assets/team/team-christian.jpg",
+    "linkedinUrl": "#"
+  }
+]
