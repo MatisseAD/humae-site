@@ -131,133 +131,170 @@ const outils: { title: string; href: string; description: string, icon: React.El
 
 export function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-
     return (
-        // 1. On ajoute un conteneur parent avec "relative"
-        <div className="relative bg-white border-b">
-            <header className="flex items-center justify-between p-4"> {/* 2. On peut retirer "relative" et "border-b" d'ici */}
-                <Link href="/" className="font-bold text-lg">
-                    <Image src="/assets/logo.png" alt="Logo Humae" width={90} height={46} />
+        <>
+        <header className="flex items-center justify-between p-4 border-b relative">
+            <Link href="/" className="font-bold text-lg">
+                <Image src="/assets/logo.png" alt="Logo Humae" width={90} height={46} />
+            </Link>
+            <button
+                className="md:hidden"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle navigation"
+            >
+                {mobileMenuOpen ? (
+                    <XMarkIcon className="w-6 h-6" />
+                ) : (
+                    <Bars3Icon className="w-6 h-6" />
+                )}
+            </button>
+            <NavigationMenu className="hidden md:block">
+                <NavigationMenuList>
+
+                    {/* Menu "Nos Solutions" */}
+                    <NavigationMenuItem>
+                        <NavigationMenuTrigger>Nos Solutions</NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                                {solutions.map((component) => (
+                                    <ListItem
+                                        key={component.title}
+                                        title={component.title}
+                                        href={component.href}
+                                        icon={component.icon}
+                                    >
+                                        {component.description}
+                                    </ListItem>
+                                ))}
+                            </ul>
+                        </NavigationMenuContent>
+                    </NavigationMenuItem>
+
+                    {/* Menu "Le Cabinet" */}
+                    <NavigationMenuItem>
+                        <NavigationMenuTrigger>Le Cabinet</NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                                {cabinet.map((component) => (
+                                    <ListItem
+                                        key={component.title}
+                                        title={component.title}
+                                        href={component.href}
+                                        icon={component.icon}
+                                    >
+                                        {component.description}
+                                    </ListItem>
+                                ))}
+                            </ul>
+                        </NavigationMenuContent>
+                    </NavigationMenuItem>
+
+                    { /* Lien simple "Outils" */}
+
+                    <NavigationMenuItem>
+                        <NavigationMenuTrigger>Outils</NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                                {outils.map((component) => (
+                                    <ListItem
+                                        key={component.title}
+                                        title={component.title}
+                                        href={component.href}
+                                        icon={component.icon}
+                                    >
+                                        {component.description}
+                                    </ListItem>
+                                ))}
+                            </ul>
+                        </NavigationMenuContent>
+                    </NavigationMenuItem>
+
+                    {/* Lien simple "Acutalités" */}
+                    <NavigationMenuItem>
+                        <NavigationMenuLink href="/actu" className={navigationMenuTriggerStyle()}>
+                                Actualités
+                        </NavigationMenuLink>
+                    </NavigationMenuItem>
+
+
+                    {/* Lien simple "Contact" */}
+                    <NavigationMenuItem>
+                        <NavigationMenuLink href="/contact" className={navigationMenuTriggerStyle()}>
+                                Contact
+                        </NavigationMenuLink>
+                    </NavigationMenuItem>
+
+                </NavigationMenuList>
+            </NavigationMenu>
+
+            <Button className="hidden md:inline-flex text-white" variant="humae" asChild>
+                <Link target="_blank" href="https://humae.fulll.io">
+                    Espace client
                 </Link>
-
-                {/* Bouton pour le menu mobile */}
-                <div className="md:hidden">
-                    <button
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        aria-label="Toggle navigation"
-                    >
-                        {mobileMenuOpen ? (
-                            <XMarkIcon className="w-6 h-6" />
-                        ) : (
-                            <Bars3Icon className="w-6 h-6" />
-                        )}
-                    </button>
-                </div>
-
-                {/* Navigation pour ordinateur */}
-                <NavigationMenu className="hidden md:flex">
-                    <NavigationMenuList>
-                        {/* ... (tout le contenu de NavigationMenuList reste le même) ... */}
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger>Nos Solutions</NavigationMenuTrigger>
-                            {/* ... */}
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger>Le Cabinet</NavigationMenuTrigger>
-                            {/* ... */}
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <NavigationMenuTrigger>Outils</NavigationMenuTrigger>
-                            {/* ... */}
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <Link href="/actu" legacyBehavior passHref>
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    Actualités
-                                </NavigationMenuLink>
+            </Button>
+        </header>
+        {mobileMenuOpen && (
+            <div className="md:hidden absolute top-full left-0 w-full bg-white border-b shadow z-50">
+                <Accordion type="multiple" className="w-full">
+                    <AccordionItem value="solutions">
+                        <AccordionTrigger className="px-4 py-2">Nos Solutions</AccordionTrigger>
+                        <AccordionContent>
+                            <ul className="flex flex-col space-y-1 pb-2">
+                                {solutions.map((item) => (
+                                    <li key={item.title}>
+                                        <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-1">
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="cabinet">
+                        <AccordionTrigger className="px-4 py-2">Le Cabinet</AccordionTrigger>
+                        <AccordionContent>
+                            <ul className="flex flex-col space-y-1 pb-2">
+                                {cabinet.map((item) => (
+                                    <li key={item.title}>
+                                        <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-1">
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="outils">
+                        <AccordionTrigger className="px-4 py-2">Outils</AccordionTrigger>
+                        <AccordionContent>
+                            <ul className="flex flex-col space-y-1 pb-2">
+                                {outils.map((item) => (
+                                    <li key={item.title}>
+                                        <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-1">
+                                            {item.title}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </AccordionContent>
+                    </AccordionItem>
+                    <div className="px-4 py-2">
+                        <Link href="/actu" onClick={() => setMobileMenuOpen(false)} className="block py-2">Actualités</Link>
+                    </div>
+                    <div className="px-4 py-2">
+                        <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block py-2">Contact</Link>
+                    </div>
+                    <div className="p-4">
+                        <Button className="w-full text-white" variant="humae" asChild>
+                            <Link target="_blank" href="https://humae.fulll.io" onClick={() => setMobileMenuOpen(false)}>
+                                Espace client
                             </Link>
-                        </NavigationMenuItem>
-                        <NavigationMenuItem>
-                            <Link href="/contact" legacyBehavior passHref>
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    Contact
-                                </NavigationMenuLink>
-                            </Link>
-                        </NavigationMenuItem>
-                    </NavigationMenuList>
-                </NavigationMenu>
-
-                <Button className="hidden md:inline-flex text-white" variant="humae" asChild>
-                    <Link target="_blank" href="https://humae.fulll.io">
-                        Espace client
-                    </Link>
-                </Button>
-            </header>
-
-            {/* Menu Mobile */}
-            {mobileMenuOpen && (
-                // 3. Ce menu est maintenant correctement positionné par rapport au conteneur principal
-                <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg z-50">
-                    <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="solutions">
-                            <AccordionTrigger className="px-4 py-3">Nos Solutions</AccordionTrigger>
-                            <AccordionContent>
-                                <ul className="flex flex-col space-y-1 p-2">
-                                    {solutions.map((item) => (
-                                        <li key={item.title}>
-                                            <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-2 rounded-md hover:bg-gray-100">
-                                                {item.title}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="cabinet">
-                            <AccordionTrigger className="px-4 py-3">Le Cabinet</AccordionTrigger>
-                            <AccordionContent>
-                                <ul className="flex flex-col space-y-1 p-2">
-                                    {cabinet.map((item) => (
-                                        <li key={item.title}>
-                                            <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-2 rounded-md hover:bg-gray-100">
-                                                {item.title}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="outils">
-                            <AccordionTrigger className="px-4 py-3">Outils</AccordionTrigger>
-                            <AccordionContent>
-                                <ul className="flex flex-col space-y-1 p-2">
-                                    {outils.map((item) => (
-                                        <li key={item.title}>
-                                            <Link href={item.href} onClick={() => setMobileMenuOpen(false)} className="block px-4 py-2 rounded-md hover:bg-gray-100">
-                                                {item.title}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </AccordionContent>
-                        </AccordionItem>
-                        <div className="border-t">
-                            <Link href="/actu" onClick={() => setMobileMenuOpen(false)} className="block py-3 px-4 hover:bg-gray-100">Actualités</Link>
-                        </div>
-                        <div className="border-t">
-                            <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block py-3 px-4 hover:bg-gray-100">Contact</Link>
-                        </div>
-                        <div className="p-4 border-t bg-gray-50">
-                            <Button className="w-full text-white" variant="humae" asChild>
-                                <Link target="_blank" href="https://humae.fulll.io" onClick={() => setMobileMenuOpen(false)}>
-                                    Espace client
-                                </Link>
-                            </Button>
-                        </div>
-                    </Accordion>
-                </div>
-            )}
-        </div>
+                        </Button>
+                    </div>
+                </Accordion>
+            </div>
+        )}
+        </>
     );
 }
 
