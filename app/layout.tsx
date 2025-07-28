@@ -7,6 +7,7 @@ import {UpArrow} from "@/components/UpArrow";
 import { Toaster } from "@/components/ui/sonner"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import Head from 'next/head';
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,6 +71,7 @@ export default function RootLayout({
         <Footer />
       <Toaster />
       <SpeedInsights />
+      <Analytics />
       </body>
     </html>
   );
