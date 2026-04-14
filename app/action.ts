@@ -14,16 +14,31 @@ const formSchema = z.object({
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+/** Escape special HTML characters to prevent XSS in email body */
+function escapeHtml(text: string): string {
+    return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+}
+
 export async function sendEmail(formData: z.infer<typeof formSchema>) {
     const validatedData = formSchema.parse(formData);
+
+    const safeName = escapeHtml(validatedData.name)
+    const safeEmail = escapeHtml(validatedData.email)
+    const safeSubject = validatedData.subject ? escapeHtml(validatedData.subject) : ''
+    const safeMessage = escapeHtml(validatedData.message).replace(/\n/g, '<br>')
 
     try {
         const data = await resend.emails.send({
             from: 'Humae Site <onboarding@resend.dev>', // Doit être ce domaine pour l'instant
             to: ['matisse.martayan@gmail.com'],
-            subject: `Nouveau message de ${validatedData.name} : ${validatedData.subject || 'Contact depuis le site'}`,
+            subject: `Nouveau message de ${safeName} : ${safeSubject || 'Contact depuis le site'}`,
             replyTo: validatedData.email,
-            html: `<p>Vous avez reçu un nouveau message de <strong>${validatedData.name}</strong> (${validatedData.email}).</p><p>Message :</p><p>${validatedData.message}</p>`,
+            html: `<p>Vous avez reçu un nouveau message de <strong>${safeName}</strong> (${safeEmail}).</p><p>Message :</p><p>${safeMessage}</p>`,
         });
 
         return { success: true, data };
