@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     AlertDialog,
     AlertDialogContent,
@@ -12,11 +12,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 export const Welcome = () => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    useEffect(() => {
-        setIsOpen(true);
-    }, []);
+    const [isOpen, setIsOpen] = useState(true);
 
     return (
         <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
