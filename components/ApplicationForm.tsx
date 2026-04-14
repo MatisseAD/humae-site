@@ -69,6 +69,7 @@ export function ApplicationForm() {
         <FormControl>
             <div>
                 <Input
+                    id="cv-input"
                     type="file"
                     className="hidden"
                     accept=".pdf"
@@ -92,7 +93,6 @@ export function ApplicationForm() {
         <FormMessage />
     </FormItem>
 )} />
-                <input type="file" id="cv-input" className="hidden" {...fileInputRef} />
 
                 <FormField name="coverLetter" control={form.control} render={({ field }) => (
                     <FormItem><FormLabel>Lettre de motivation (Optionnel)</FormLabel><FormControl><Textarea placeholder="Pourquoi souhaitez-vous rejoindre Humae ?" {...field} /></FormControl><FormMessage /></FormItem>

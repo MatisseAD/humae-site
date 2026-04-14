@@ -20,11 +20,23 @@ export default function AdminDashboard() {
   const [newsImage, setNewsImage] = useState<File | null>(null)
   const [newsPreview, setNewsPreview] = useState<string | null>(null)
   const [editingNewsId, setEditingNewsId] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    fetch('/api/team').then(res => res.json()).then(setTeam)
-    fetch('/api/users').then(res => res.json()).then(setUsers)
-    fetch('/api/news').then(res => res.json()).then(setNews)
+    Promise.all([
+      fetch('/api/team').then(res => res.json()),
+      fetch('/api/users').then(res => res.json()),
+      fetch('/api/news').then(res => res.json()),
+    ])
+      .then(([teamData, usersData, newsData]) => {
+        setTeam(teamData)
+        setUsers(usersData)
+        setNews(newsData)
+      })
+      .catch(() => setError('Erreur lors du chargement des données'))
+      .finally(() => setLoading(false))
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,78 +100,124 @@ export default function AdminDashboard() {
   }
 
   const saveMember = async () => {
-    const imageSrc = await uploadImage()
-    const payload = { ...form, imageSrc }
-    if (editingId) {
-      const res = await fetch(`/api/team/${editingId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      if (res.ok) {
-        const updated = await res.json()
-        setTeam(team.map(t => t.id === editingId ? updated : t))
-        setEditingId(null)
+    setSaving(true)
+    setError(null)
+    try {
+      const imageSrc = await uploadImage()
+      const payload = { ...form, imageSrc }
+      if (editingId) {
+        const res = await fetch(`/api/team/${editingId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        if (res.ok) {
+          const updated = await res.json()
+          setTeam(team.map(t => t.id === editingId ? updated : t))
+          setEditingId(null)
+        } else {
+          const data = await res.json()
+          setError(data.error || 'Erreur lors de la mise à jour')
+        }
+      } else {
+        const res = await fetch('/api/team', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        if (res.ok) {
+          const newMember = await res.json()
+          setTeam([...team, newMember])
+        } else {
+          const data = await res.json()
+          setError(data.error || 'Erreur lors de l\'ajout')
+        }
       }
-    } else {
-      const res = await fetch('/api/team', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      if (res.ok) {
-        const newMember = await res.json()
-        setTeam([...team, newMember])
-      }
+      setForm({ name: '', role: '', imageSrc: '', linkedinUrl: '' })
+      setImageFile(null)
+      setPreview(null)
+    } catch {
+      setError('Une erreur inattendue s\'est produite')
+    } finally {
+      setSaving(false)
     }
-    setForm({ name: '', role: '', imageSrc: '', linkedinUrl: '' })
-    setImageFile(null)
-    setPreview(null)
   }
 
   const deleteMember = async (id: string) => {
     const res = await fetch(`/api/team/${id}`, { method: 'DELETE' })
-    if (res.ok) setTeam(team.filter(t => t.id !== id))
+    if (res.ok) {
+      setTeam(team.filter(t => t.id !== id))
+    } else {
+      const data = await res.json()
+      setError(data.error || 'Erreur lors de la suppression')
+    }
   }
 
   const saveNews = async () => {
-    const imageSrc = await uploadNewsImage()
-    const payload = { ...newsForm, imageSrc }
-    if (editingNewsId) {
-      const res = await fetch(`/api/news/${editingNewsId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      if (res.ok) {
-        const updated = await res.json()
-        setNews(news.map(n => n.id === editingNewsId ? updated : n))
-        setEditingNewsId(null)
+    setSaving(true)
+    setError(null)
+    try {
+      const imageSrc = await uploadNewsImage()
+      const payload = { ...newsForm, imageSrc }
+      if (editingNewsId) {
+        const res = await fetch(`/api/news/${editingNewsId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        if (res.ok) {
+          const updated = await res.json()
+          setNews(news.map(n => n.id === editingNewsId ? updated : n))
+          setEditingNewsId(null)
+        } else {
+          const data = await res.json()
+          setError(data.error || 'Erreur lors de la mise à jour')
+        }
+      } else {
+        const res = await fetch('/api/news', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        if (res.ok) {
+          const item = await res.json()
+          setNews([...news, item])
+        } else {
+          const data = await res.json()
+          setError(data.error || 'Erreur lors de l\'ajout')
+        }
       }
-    } else {
-      const res = await fetch('/api/news', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      if (res.ok) {
-        const item = await res.json()
-        setNews([...news, item])
-      }
+      setNewsForm({ title: '', subject: '', content: '', imageSrc: '' })
+      setNewsImage(null)
+      setNewsPreview(null)
+    } catch {
+      setError('Une erreur inattendue s\'est produite')
+    } finally {
+      setSaving(false)
     }
-    setNewsForm({ title: '', subject: '', content: '', imageSrc: '' })
-    setNewsImage(null)
-    setNewsPreview(null)
   }
 
   const deleteNewsItem = async (id: string) => {
     const res = await fetch(`/api/news/${id}`, { method: 'DELETE' })
-    if (res.ok) setNews(news.filter(n => n.id !== id))
+    if (res.ok) {
+      setNews(news.filter(n => n.id !== id))
+    } else {
+      const data = await res.json()
+      setError(data.error || 'Erreur lors de la suppression')
+    }
   }
+
+  if (loading) return <p className="p-8 text-center">Chargement...</p>
 
   return (
     <div className="p-8 max-w-6xl mx-auto space-y-6">
       <h1 className="text-3xl font-bold mb-6 text-center">Tableau de bord</h1>
+      {error && (
+        <div className="bg-red-50 border border-red-300 text-red-700 rounded p-3 text-sm">
+          {error}
+          <button className="ml-2 underline" onClick={() => setError(null)}>Fermer</button>
+        </div>
+      )}
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="bg-white shadow rounded p-6 space-y-4">
           <h2 className="text-xl font-bold">Équipe</h2>
@@ -170,12 +228,12 @@ export default function AdminDashboard() {
             <input className="border p-2 w-full" placeholder="LinkedIn" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} />
           </div>
           {preview && (<Image width={800} height={400} src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
-          <Button className="text-white px-4 py-2 rounded hover:cursor-pointer" variant={"humae"} onClick={saveMember}>{editingId ? 'Enregistrer' : 'Ajouter'}</Button>
+          <Button className="text-white px-4 py-2 rounded hover:cursor-pointer" variant={"humae"} onClick={saveMember} disabled={saving}>{saving ? 'En cours...' : editingId ? 'Enregistrer' : 'Ajouter'}</Button>
           <ul className="space-y-2">
             {team.map(member => (
               <li key={member.id} className="flex items-center justify-between border p-2 rounded">
                 <div className="flex items-center space-x-2 cursor-pointer flex-1" onClick={() => { setForm({ name: member.name, role: member.role, imageSrc: member.imageSrc, linkedinUrl: member.linkedinUrl || '' }); setEditingId(member.id); setPreview(member.imageSrc); }}>
-                  <img src={member.imageSrc} alt={member.name} className="w-12 h-12 rounded-full object-cover" />
+                  <Image src={member.imageSrc} alt={member.name} width={48} height={48} className="w-12 h-12 rounded-full object-cover" />
                   <span>{member.name}</span>
                 </div>
                 <Button className="hover:cursor-pointer" variant={"humae"} onClick={() => deleteMember(member.id)}>Supprimer</Button>
@@ -193,7 +251,7 @@ export default function AdminDashboard() {
             <input type="file" className="border p-2 w-full" onChange={handleNewsFileChange} />
           </div>
           {newsPreview && (<Image width={800} height={400} src={newsPreview} alt="preview" className="w-32 h-32 object-cover" />)}
-          <Button className="hover:cursor-pointer" variant="humae" onClick={saveNews}>{editingNewsId ? 'Enregistrer' : 'Ajouter'}</Button>
+          <Button className="hover:cursor-pointer" variant="humae" onClick={saveNews} disabled={saving}>{saving ? 'En cours...' : editingNewsId ? 'Enregistrer' : 'Ajouter'}</Button>
           <ul className="space-y-1 mt-2">
             {news.map(n => (
               <li key={n.id} className="flex justify-between border p-2 rounded">
@@ -217,16 +275,27 @@ export default function AdminDashboard() {
             {team.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
           </select>
         </div>
-        <Button className="hover:cursor-pointer" variant={"humae"} onClick={async () => {
+        <Button className="hover:cursor-pointer" variant={"humae"} disabled={saving} onClick={async () => {
           if(!userForm.username || !userForm.password || !userForm.memberId) return;
-          const res = await fetch('/api/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userForm) })
-          if(res.ok){ const u = await res.json(); setUsers([...users, u]); setUserForm({ username: '', password: '', memberId: '' }) }
-        }}>Créer utilisateur</Button>
+          if(userForm.password.length < 8) { setError('Le mot de passe doit comporter au moins 8 caractères'); return; }
+          setSaving(true)
+          setError(null)
+          try {
+            const res = await fetch('/api/users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userForm) })
+            if(res.ok){ const u = await res.json(); setUsers([...users, u]); setUserForm({ username: '', password: '', memberId: '' }) }
+            else { const data = await res.json(); setError(data.error || 'Erreur lors de la création') }
+          } catch { setError('Une erreur inattendue s\'est produite') }
+          finally { setSaving(false) }
+        }}>{saving ? 'En cours...' : 'Créer utilisateur'}</Button>
         <ul className="space-y-1 mt-2">
           {users.map(u => (
             <li key={u.id} className="flex justify-between border p-2 rounded">
               <span>{u.username} - {team.find(t => t.id === u.memberId)?.name}</span>
-              <button className="text-red-500" onClick={async () => { await fetch(`/api/users/${u.id}`, { method: 'DELETE' }); setUsers(users.filter(us => us.id !== u.id)) }}>Supprimer</button>
+              <button className="text-red-500" onClick={async () => {
+                const res = await fetch(`/api/users/${u.id}`, { method: 'DELETE' })
+                if (res.ok) { setUsers(users.filter(us => us.id !== u.id)) }
+                else { const data = await res.json(); setError(data.error || 'Erreur lors de la suppression') }
+              }}>Supprimer</button>
             </li>
           ))}
         </ul>
