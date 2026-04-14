@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getUsers, addUser } from '@/lib/userService'
-import { getUser } from '@/lib/userService'
 import { requireAdmin } from '@/lib/authGuard'
 
 export async function GET() {
@@ -21,12 +20,6 @@ export async function POST(req: NextRequest) {
     !memberId || typeof memberId !== 'string'
   ) {
     return NextResponse.json({ error: 'Missing or invalid fields' }, { status: 400 })
-  }
-
-  // Verify the referenced team member exists
-  const member = await getUser(memberId).catch(() => null)
-  if (member === undefined) {
-    // getUser throws on non-PGRST116 errors; just proceed – DB FK will catch it
   }
 
   try {

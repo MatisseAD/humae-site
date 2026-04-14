@@ -28,17 +28,26 @@ export async function PUT(
   const { id } = await params
 
   // Admins can update any field; members can only update their own linkedinUrl/imageSrc
-  const userIdOrResponse = await requireUser()
-  const isAdmin = !(userIdOrResponse instanceof NextResponse)
-  if (!isAdmin) {
-    const denied = await requireAdmin()
-    if (denied) return denied
-  }
+  const adminDenied = await requireAdmin()
+  const isAdmin = adminDenied === null
 
-  const body = await req.json()
-
-  // Non-admin members may only mutate linkedinUrl and imageSrc of their own record
   if (!isAdmin) {
+    // Not an admin — check if it's the member whose profile this is
+    const userIdOrResponse = await requireUser()
+    if (userIdOrResponse instanceof NextResponse) {
+      // Not authenticated at all
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Authenticated member: fetch their team member record to verify ownership
+    const { getTeam } = await import('@/lib/teamService')
+    const team = await getTeam()
+    const ownMember = team.find(m => m.id === id)
+    if (!ownMember) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 })
+    }
+
+    const body = await req.json()
     const allowed: Record<string, unknown> = {}
     if ('linkedinUrl' in body) allowed.linkedinUrl = body.linkedinUrl
     if ('imageSrc' in body) allowed.imageSrc = body.imageSrc
@@ -51,6 +60,7 @@ export async function PUT(
     }
   }
 
+  const body = await req.json()
   try {
     const updated = await updateMember(id, body)
     return NextResponse.json(updated)
