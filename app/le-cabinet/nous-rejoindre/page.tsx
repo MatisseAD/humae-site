@@ -1,20 +1,11 @@
 // app/le-cabinet/nous-rejoindre/page.tsx
 
 import type { Metadata } from 'next';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ApplicationForm } from '@/components/ApplicationForm';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'Nous Rejoindre - Le Cabinet Humae',
-    description: 'Rejoignez une équipe dynamique et bienveillante. Découvrez nos offres d\'emploi ou envoyez une candidature spontanée.',
+    description: 'Humae ne recrute pas de nouveaux collaborateurs pour le moment.',
 };
-
-const jobOpenings = [
-    { title: 'Comptable Confirmé(e)', category: 'comptable', location: 'Brindas (69)', type: 'CDI' },
-    { title: 'Stage Assistant(e) Comptable', category: 'stage', location: 'Lyon (69)', type: 'Stage 6 mois' },
-];
 
 export default function NousRejoindrePage() {
     return (
@@ -26,47 +17,17 @@ export default function NousRejoindrePage() {
                         Rejoignez l&apos;aventure Humae
                     </h2>
                     <p className="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
-                        Nous cherchons des personnes passionnées, qui partagent nos valeurs de proximité et de clarté, pour réinventer ensemble le métier de l&apos;expertise comptable.
+                        Humae ne recherche pas de nouveaux collaborateurs pour le moment.
                     </p>
                 </div>
-
-                <Tabs defaultValue="tous" className="w-full">
-                    <TabsList className="grid w-full grid-cols-4 mb-8">
-                        <TabsTrigger value="tous">Tous les postes</TabsTrigger>
-                        <TabsTrigger value="comptable">Comptable</TabsTrigger>
-                        <TabsTrigger value="expert">Expert-Comptable</TabsTrigger>
-                        <TabsTrigger value="stage">Stage</TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="tous">
-                        {jobOpenings.length > 0 ? (
-                            <div className="space-y-4">
-                                {jobOpenings.map((job, index) => (
-                                    <div key={index} className="border p-6 rounded-lg flex justify-between items-center">
-                                        <div>
-                                            <h3 className="font-semibold text-lg">{job.title}</h3>
-                                            <p className="text-sm text-gray-500">{job.location} - {job.type}</p>
-                                        </div>
-                                        <Button asChild><Link href={`/contact?subject=Candidature: ${job.title}`}>Postuler</Link></Button>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p className="text-center text-gray-500 py-8">Il n&apos;y a pas d&apos;offres d&apos;emploi pour le moment, mais nous sommes toujours ouverts aux candidatures spontanées !</p>
-                        )}
-                    </TabsContent>
-                </Tabs>
-
-                <div className="mt-20 pt-12 border-t">
-                    <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold text-gray-900">Candidature Spontanée</h2>
-                        <p className="mt-4 text-lg text-gray-600">Aucune offre ne vous correspond ? Envoyez-nous votre profil.</p>
-                    </div>
-                    <div className="max-w-xl mx-auto">
-                        <ApplicationForm />
-                    </div>
+                <div className="mx-auto max-w-3xl rounded-lg border border-gray-200 bg-gray-50 p-8 text-center">
+                    <p className="text-lg text-gray-700">
+                        Les candidatures spontanées et les candidatures aux offres sont temporairement fermées.
+                    </p>
+                    <p className="mt-4 text-base text-gray-600">
+                        Cette page sera mise à jour dès l&apos;ouverture de nouveaux recrutements.
+                    </p>
                 </div>
-
             </div>
         </div>
     );
