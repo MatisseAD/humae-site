@@ -132,15 +132,17 @@ const outils: { title: string; href: string; description: string, icon: React.El
 export function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
     return (
-        <>
-        <header className="flex items-center justify-between p-4 border-b relative">
+        <div className="relative z-50">
+        <header className="flex items-center justify-between p-4 border-b bg-white">
             <Link href="/" className="font-bold text-lg">
                 <Image src="/assets/logo.png" alt="Logo Humae" width={90} height={46} />
             </Link>
             <button
                 className="md:hidden"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle navigation"
+                aria-label={mobileMenuOpen ? 'Fermer la navigation' : 'Ouvrir la navigation'}
+                aria-controls="mobile-navigation"
+                aria-expanded={mobileMenuOpen}
             >
                 {mobileMenuOpen ? (
                     <XMarkIcon className="w-6 h-6" />
@@ -228,13 +230,13 @@ export function Navbar() {
             </NavigationMenu>
 
             <Button className="hidden md:inline-flex text-white" variant="humae" asChild>
-                <Link target="_blank" href="https://humae.fulll.io">
+                <Link target="_blank" rel="noopener noreferrer" href="https://humae.fulll.io">
                     Espace client
                 </Link>
             </Button>
         </header>
         {mobileMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 w-full bg-white border-b shadow z-50">
+            <div id="mobile-navigation" className="md:hidden absolute top-full left-0 w-full bg-white border-b shadow z-50">
                 <Accordion type="multiple" className="w-full">
                     <AccordionItem value="solutions">
                         <AccordionTrigger className="px-4 py-2">Nos Solutions</AccordionTrigger>
@@ -286,7 +288,7 @@ export function Navbar() {
                     </div>
                     <div className="p-4">
                         <Button className="w-full text-white" variant="humae" asChild>
-                            <Link target="_blank" href="https://humae.fulll.io" onClick={() => setMobileMenuOpen(false)}>
+                            <Link target="_blank" rel="noopener noreferrer" href="https://humae.fulll.io" onClick={() => setMobileMenuOpen(false)}>
                                 Espace client
                             </Link>
                         </Button>
@@ -294,7 +296,7 @@ export function Navbar() {
                 </Accordion>
             </div>
         )}
-        </>
+        </div>
     );
 }
 

@@ -1,16 +1,17 @@
 // app/nos-outils/page.tsx
 
-import type { Metadata } from 'next';
+import { createPageMetadata } from '@/lib/siteMetadata';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import SectionSeparator from '@/components/SectionSeparator';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
     title: 'Nos Outils - Humae',
     description: 'Découvrez les outils technologiques que Humae met à votre disposition pour simplifier votre gestion et piloter votre entreprise.',
-};
+    path: '/le-cabinet/nos-outils',
+});
 
 const tools = [
     {

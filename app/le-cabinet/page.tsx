@@ -1,9 +1,10 @@
-import type { Metadata } from 'next';
+import { createPageMetadata } from '@/lib/siteMetadata';
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
     title: 'Présentation - Le Cabinet Humae',
     description: 'Découvrez la mission et la philosophie de Humae, votre partenaire comptable.',
-};
+    path: '/le-cabinet',
+});
 
 
 export default function CabinetHomePage() {

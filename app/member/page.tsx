@@ -1,17 +1,17 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import MemberDashboard from '@/components/MemberDashboard'
-import jwt from 'jsonwebtoken'
+import { MEMBER_COOKIE_NAME, verifyMemberToken } from '@/lib/authTokens'
 
 export default async function MemberPage() {
   const cookieStore = await cookies()
-  const token = cookieStore.get('userAuth')?.value
+  const token = cookieStore.get(MEMBER_COOKIE_NAME)?.value
 
   if (!token) redirect('/member/login')
 
   let userId: string
   try {
-    const payload = jwt.verify(token, process.env.ADMIN_JWT_SECRET!) as { userId: string }
+    const payload = verifyMemberToken(token)
     userId = payload.userId
   } catch {
     redirect('/member/login')

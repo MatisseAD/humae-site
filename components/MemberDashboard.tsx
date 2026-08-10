@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { TeamMember } from '@/lib/teamService'
+import type { TeamMember } from '@/lib/teamService'
 import Image from "next/image";
+import { useRouter } from 'next/navigation'
 
 export default function MemberDashboard({ userId }: { userId: string }) {
+  const router = useRouter()
   const [member, setMember] = useState<TeamMember | null>(null)
   const [memberId, setMemberId] = useState<string | null>(null)
   const [linkedinUrl, setLinkedinUrl] = useState('')
@@ -17,6 +19,10 @@ export default function MemberDashboard({ userId }: { userId: string }) {
   useEffect(() => {
     fetch(`/api/users/${userId}`)
       .then(res => {
+        if (res.status === 401) {
+          router.replace('/member/login')
+          throw new Error('Session expirée')
+        }
         if (!res.ok) throw new Error('Utilisateur introuvable')
         return res.json()
       })
@@ -35,16 +41,21 @@ export default function MemberDashboard({ userId }: { userId: string }) {
       })
       .catch(err => setMessage({ type: 'error', text: err.message || 'Erreur de chargement' }))
       .finally(() => setLoading(false))
-  }, [userId])
+  }, [router, userId])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
+    if (file && file.size > 3 * 1024 * 1024) {
+      setMessage({ type: 'error', text: 'L’image ne doit pas dépasser 3 Mo' })
+      e.target.value = ''
+      return
+    }
     setImageFile(file)
     setPreview(file ? URL.createObjectURL(file) : preview)
   }
 
   const uploadImage = async () => {
-    if (!imageFile) return member?.imageSrc || ''
+    if (!imageFile || !memberId) return null
     const reader = new FileReader()
     return new Promise<string>((resolve, reject) => {
       reader.onload = async () => {
@@ -52,7 +63,12 @@ export default function MemberDashboard({ userId }: { userId: string }) {
           const res = await fetch('/api/upload', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ file: reader.result, filename: imageFile.name, folder: 'team' })
+            body: JSON.stringify({
+              file: reader.result,
+              filename: imageFile.name,
+              folder: 'team',
+              memberId,
+            })
           })
           const data = await res.json()
           if (!res.ok) throw new Error(data.error || 'Erreur upload')
@@ -72,10 +88,11 @@ export default function MemberDashboard({ userId }: { userId: string }) {
     setMessage(null)
     try {
       const imageSrc = await uploadImage()
+      const payload = imageSrc ? { linkedinUrl, imageSrc } : { linkedinUrl }
       const res = await fetch(`/api/team/${memberId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ linkedinUrl, imageSrc })
+        body: JSON.stringify(payload)
       })
       if (res.ok) {
         const updated = await res.json()
@@ -97,7 +114,24 @@ export default function MemberDashboard({ userId }: { userId: string }) {
 
   return (
     <div className="p-8 space-y-4 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold">Mon Profil</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold">Mon Profil</h1>
+        <button
+          className="rounded border px-3 py-2 text-sm"
+          onClick={async () => {
+            try {
+              const response = await fetch('/api/logout', { method: 'POST' })
+              if (!response.ok) throw new Error('Logout failed')
+              router.replace('/member/login')
+              router.refresh()
+            } catch {
+              setMessage({ type: 'error', text: 'Impossible de se déconnecter pour le moment' })
+            }
+          }}
+        >
+          Se déconnecter
+        </button>
+      </div>
       {message && (
         <div className={`rounded p-3 text-sm ${message.type === 'success' ? 'bg-green-50 border border-green-300 text-green-700' : 'bg-red-50 border border-red-300 text-red-700'}`}>
           {message.text}
@@ -106,15 +140,18 @@ export default function MemberDashboard({ userId }: { userId: string }) {
       <div className="space-y-2">
         <p>Nom : {member.name}</p>
         <p>Rôle : {member.role}</p>
+        <label htmlFor="member-linkedin" className="text-sm font-medium">Profil LinkedIn</label>
         <input
+          id="member-linkedin"
           className="border p-2 w-full"
           value={linkedinUrl}
           onChange={e => setLinkedinUrl(e.target.value)}
           placeholder="Lien LinkedIn"
         />
-        <input type="file" accept="image/*" className="border p-2 w-full" onChange={handleFileChange} />
+        <label htmlFor="member-photo" className="text-sm font-medium">Photo de profil</label>
+        <input id="member-photo" type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="border p-2 w-full" onChange={handleFileChange} />
         {preview && <Image src={preview} alt="Aperçu" width={128} height={128} className="w-32 h-32 object-cover rounded-full" />}
-        <button className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50" onClick={save} disabled={saving}>
+        <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50" onClick={save} disabled={saving}>
           {saving ? 'Enregistrement...' : 'Enregistrer'}
         </button>
       </div>

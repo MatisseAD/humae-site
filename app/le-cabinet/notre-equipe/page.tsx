@@ -1,13 +1,15 @@
 
-import type { Metadata } from 'next'
 import { TeamCard } from '@/components/TeamCard'
 import { getTeam } from '@/lib/teamService'
+import { createPageMetadata } from '@/lib/siteMetadata'
 
 export const dynamic = 'force-dynamic'
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
     title: 'Notre Équipe - Le Cabinet Humae',
-}
+    description: 'Découvrez les professionnels Humae qui accompagnent votre entreprise au quotidien.',
+    path: '/le-cabinet/notre-equipe',
+})
 
 export default async function NotreEquipePage() {
     const teamMembers = await getTeam()

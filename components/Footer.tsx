@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import Image from "next/image";
 import * as React from "react";
-import {Separator} from "@/components/ui/separator";
-import SectionSeparator from "@/components/SectionSeparator";
 
 // Icône pour LinkedIn (à remplacer si tu utilises une autre bibliothèque)
 const LinkedInIcon = (props: React.ComponentProps<'svg'>) => (
@@ -35,7 +33,7 @@ export function Footer() {
                         </p>
                         <div className="text-black">
                             <p className="text-sm">50 rue du Pré Magne, 69126 Brindas</p>
-                            <p className="text-sm">04 72 49 21 90</p>
+                            <p className="text-sm"><a href="tel:+33472492190" className="hover:text-[#F18F01]">04 72 49 21 90</a></p>
                         </div>
                     </div>
 
@@ -43,9 +41,9 @@ export function Footer() {
                     <div>
                         <h4 className="font-semibold mb-4 text-black">Plan du Site</h4>
                         <ul className="space-y-2 text-sm text-black">
-                            <li><Link href="/nos-offres" className="hover:text-[#F18F01]">Nos Offres</Link></li>
+                            <li><Link href="/nos-solutions" className="hover:text-[#F18F01]">Nos Solutions</Link></li>
                             <li><Link href="/le-cabinet" className="hover:text-[#F18F01]">Le Cabinet</Link></li>
-                            <li><Link href="/actualites" className="hover:text-[#F18F01]">Actualités</Link></li>
+                            <li><Link href="/actu" className="hover:text-[#F18F01]">Actualités</Link></li>
                             <li><Link href="/contact" className="hover:text-[#F18F01]">Contact</Link></li>
                         </ul>
                     </div>
@@ -64,13 +62,15 @@ export function Footer() {
                     {/* Colonne 4: Réseaux Sociaux */}
                     <div>
                         <h4 className="font-semibold mb-4 text-black">Suivez-nous</h4>
-                        <a href="https://fr.linkedin.com/company/humae-expertise-comptable" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                            <LinkedInIcon className="w-6 h-6 text-black hover:text-[var(--humae-violet)]" />
-                        </a>
+                        <div className="flex gap-3">
+                            <a href="https://fr.linkedin.com/company/humae-expertise-comptable" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                                <LinkedInIcon className="w-6 h-6 text-black hover:text-[var(--humae-violet)]" />
+                            </a>
 
-                        <a href="https://www.facebook.com/HumaeBrindas#" target="_blank" rel="noopener noreferrer" aria-label="Facebook" >
-                            <FacebookIcon  className="w-6 h-6 text-black hover:text-[var(--humae-violet)] " />
-                        </a>
+                            <a href="https://www.facebook.com/HumaeBrindas" target="_blank" rel="noopener noreferrer" aria-label="Facebook" >
+                                <FacebookIcon className="w-6 h-6 text-black hover:text-[var(--humae-violet)]" />
+                            </a>
+                        </div>
 
                     </div>
                 </div>

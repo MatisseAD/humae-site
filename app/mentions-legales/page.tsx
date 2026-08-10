@@ -1,18 +1,19 @@
 // app/mentions-legales/page.tsx
 
-import type { Metadata } from 'next';
 import Link from 'next/link';
+import { createPageMetadata } from '@/lib/siteMetadata';
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
     title: 'Mentions Légales - Humae',
     description: 'Consultez les mentions légales du site Humae, cabinet d\'expertise comptable.',
-};
+    path: '/mentions-legales',
+});
 
 export default function MentionsLegalesPage() {
     return (
         <div className="container mx-auto max-w-4xl px-4 py-12">
             <h1 className="text-4xl font-bold text-[var(--humae-violet)] mb-2">Mentions Légales</h1>
-            <p className="text-sm text-gray-500 mb-8">Dernière mise à jour : 21 juillet 2025</p>
+            <p className="text-sm text-gray-500 mb-8">Dernière mise à jour : 9 août 2026</p>
 
             <div className="space-y-8 text-gray-700">
 
@@ -20,7 +21,7 @@ export default function MentionsLegalesPage() {
                     <h2 className="text-2xl font-semibold mb-4 border-b pb-2">1. Éditeur du Site</h2>
                     <p>
                         <strong>HUMAE SARL</strong><br />
-                        Société à responsabilité limitée inscrite au RCS de LYON sous le n° 828 403 741 00014, au capital de 8 000 euros.
+                        Société à responsabilité limitée immatriculée au RCS de Lyon sous le n° 828 403 741 (SIRET 828 403 741 00014), au capital de 8 000 euros.
                     </p>
                     <ul className="mt-4 space-y-1 list-inside">
                         <li><strong>Siège social :</strong> 50 rue du Pré Magné, 69126 BRINDAS</li>
@@ -34,12 +35,12 @@ export default function MentionsLegalesPage() {
                     <h2 className="text-2xl font-semibold mb-4 border-b pb-2">2. Hébergement du Site</h2>
                     <p>
                         Ce site est hébergé par :<br />
-                        <strong>OVH</strong><br />
-                        Une société française, dont les services sont conformes au RGPD (Règlement Général sur la Protection des Données).
+                        <strong>Vercel Inc.</strong><br />
+                        Plateforme d&apos;hébergement et de diffusion du site.
                     </p>
                     <ul className="mt-4 space-y-1 list-inside">
-                        <li><strong>Siège social :</strong> 2 rue Kellermann, 59100 Roubaix</li>
-                        <li><strong>Site web :</strong> <a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener noreferrer" className="text-[var(--humae-violet)] hover:underline">ovhcloud.com</a></li>
+                        <li><strong>Adresse :</strong> 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis</li>
+                        <li><strong>Site web :</strong> <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-[var(--humae-violet)] hover:underline">vercel.com</a></li>
                     </ul>
                 </section>
 
@@ -60,7 +61,7 @@ export default function MentionsLegalesPage() {
                         <li>Droit à la portabilité</li>
                     </ul>
                     <p className="mt-4">
-                        Ces données sont conservées pour une durée de 3 ans après notre dernier contact et ne sont pas transférées à des tiers. Pour exercer vos droits, veuillez contacter le responsable de traitement par e-mail à <a href="mailto:contact@humae.fr" className="text-[var(--humae-violet)] hover:underline">contact@humae.fr</a>.
+                        Ces données sont conservées pour une durée maximale de 3 ans après notre dernier contact. Elles peuvent être traitées par les prestataires techniques strictement nécessaires à l&apos;hébergement et à l&apos;envoi des messages. Pour exercer vos droits, veuillez contacter le responsable de traitement par e-mail à <a href="mailto:contact@humae.fr" className="text-[var(--humae-violet)] hover:underline">contact@humae.fr</a>.
                     </p>
                     <p className="mt-4">
                         En cas de réclamation, vous pouvez contacter la Commission Nationale de l’Informatique et des Libertés (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-[var(--humae-violet)] hover:underline">www.cnil.fr</a>).
@@ -77,14 +78,14 @@ export default function MentionsLegalesPage() {
                 <section>
                     <h2 className="text-2xl font-semibold mb-4 border-b pb-2">5. Cookies</h2>
                     <p>
-                        Notre site utilise des cookies pour améliorer votre expérience de navigation et pour mesurer l&apos;audience de manière anonyme.
+                        Le site n&apos;utilise pas de cookies publicitaires. Des cookies strictement nécessaires peuvent être déposés pour sécuriser les espaces authentifiés. La mesure d&apos;audience et de performance est réalisée par les outils Vercel à partir de données techniques agrégées, sans cookie tiers de suivi inter-sites.
                     </p>
                     <ul className="mt-4 space-y-2 list-disc list-inside">
-                        <li><strong>Cookies strictement nécessaires :</strong> Ils sont indispensables au bon fonctionnement du site et ne peuvent pas être désactivés.</li>
-                        <li><strong>Cookies de performance et de mesure d&apos;audience :</strong> Nous utilisons des outils d&apos;analyse qui collectent des données de manière anonyme et respectueuse de la vie privée, sans stocker d&apos;informations sur votre appareil.</li>
+                        <li><strong>Cookies strictement nécessaires :</strong> ils sont indispensables au fonctionnement et à la sécurité des espaces concernés.</li>
+                        <li><strong>Mesure d&apos;audience et de performance :</strong> elle sert à détecter les problèmes de navigation et à améliorer le site.</li>
                     </ul>
                     <p className="mt-4">
-                        Conformément à la législation, votre consentement est recueilli via un bandeau informatif lors de votre première visite pour tous les cookies non essentiels. Vous pouvez modifier vos préférences à tout moment depuis cette même interface.
+                        Si des traceurs non essentiels sont ajoutés ultérieurement, ils ne seront activés qu&apos;après recueil du consentement lorsqu&apos;il est requis.
                     </p>
                 </section>
 

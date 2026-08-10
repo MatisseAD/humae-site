@@ -1,5 +1,9 @@
 # public/robots.txt
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /member
+Disallow: /api/
+Disallow: /outils/
 
 Sitemap: https://www.humae.fr/sitemap.xml

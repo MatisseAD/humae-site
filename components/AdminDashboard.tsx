@@ -1,13 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { TeamMember } from '@/lib/teamService'
-import { User } from '@/lib/userService'
-import { NewsItem } from '@/lib/newsService'
+import { useRouter } from 'next/navigation'
+import type { TeamMember } from '@/lib/teamService'
+import type { User } from '@/lib/userService'
+import type { NewsItem } from '@/lib/newsService'
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
 
 export default function AdminDashboard() {
+  const router = useRouter()
   const [team, setTeam] = useState<TeamMember[]>([])
   const [form, setForm] = useState({ name: '', role: '', imageSrc: '', linkedinUrl: '' })
   const [imageFile, setImageFile] = useState<File | null>(null)
@@ -25,19 +27,46 @@ export default function AdminDashboard() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    Promise.all([
-      fetch('/api/team').then(res => res.json()),
-      fetch('/api/users').then(res => res.json()),
-      fetch('/api/news').then(res => res.json()),
-    ])
-      .then(([teamData, usersData, newsData]) => {
-        setTeam(teamData)
-        setUsers(usersData)
-        setNews(newsData)
-      })
-      .catch(() => setError('Erreur lors du chargement des données'))
-      .finally(() => setLoading(false))
-  }, [])
+    let cancelled = false
+
+    async function loadDashboard() {
+      try {
+        const responses = await Promise.all([
+          fetch('/api/team'),
+          fetch('/api/users'),
+          fetch('/api/news'),
+        ])
+
+        if (responses.some((response) => response.status === 401)) {
+          router.replace('/admin/login')
+          return
+        }
+        if (responses.some((response) => !response.ok)) {
+          throw new Error('Dashboard dependency unavailable')
+        }
+
+        const [teamData, usersData, newsData] = await Promise.all(
+          responses.map((response) => response.json())
+        )
+        if (!Array.isArray(teamData) || !Array.isArray(usersData) || !Array.isArray(newsData)) {
+          throw new Error('Unexpected dashboard response')
+        }
+
+        if (!cancelled) {
+          setTeam(teamData)
+          setUsers(usersData)
+          setNews(newsData)
+        }
+      } catch {
+        if (!cancelled) setError('Les données du tableau de bord sont momentanément indisponibles')
+      } finally {
+        if (!cancelled) setLoading(false)
+      }
+    }
+
+    void loadDashboard()
+    return () => { cancelled = true }
+  }, [router])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -45,12 +74,22 @@ export default function AdminDashboard() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
+    if (file && file.size > 3 * 1024 * 1024) {
+      setError('L’image ne doit pas dépasser 3 Mo')
+      e.target.value = ''
+      return
+    }
     setImageFile(file)
     setPreview(file ? URL.createObjectURL(file) : null)
   }
 
   const handleNewsFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null
+    if (file && file.size > 3 * 1024 * 1024) {
+      setError('L’image ne doit pas dépasser 3 Mo')
+      e.target.value = ''
+      return
+    }
     setNewsImage(file)
     setNewsPreview(file ? URL.createObjectURL(file) : null)
   }
@@ -67,6 +106,7 @@ export default function AdminDashboard() {
             body: JSON.stringify({ file: reader.result, filename: imageFile.name, folder: 'team' })
           })
           const data = await res.json()
+          if (!res.ok) throw new Error(data.error || 'Erreur upload')
           resolve(data.path)
         } catch (err) {
           reject(err)
@@ -89,6 +129,7 @@ export default function AdminDashboard() {
             body: JSON.stringify({ file: reader.result, filename: newsImage.name, folder: 'news' })
           })
           const data = await res.json()
+          if (!res.ok) throw new Error(data.error || 'Erreur upload')
           resolve(data.path)
         } catch (err) {
           reject(err)
@@ -211,7 +252,21 @@ export default function AdminDashboard() {
 
   return (
     <div className="p-8 max-w-6xl mx-auto space-y-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">Tableau de bord</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="text-3xl font-bold">Tableau de bord</h1>
+        <Button variant="outline" onClick={async () => {
+          try {
+            const response = await fetch('/api/logout', { method: 'POST' })
+            if (!response.ok) throw new Error('Logout failed')
+            router.replace('/admin/login')
+            router.refresh()
+          } catch {
+            setError('Impossible de se déconnecter pour le moment')
+          }
+        }}>
+          Se déconnecter
+        </Button>
+      </div>
       {error && (
         <div className="bg-red-50 border border-red-300 text-red-700 rounded p-3 text-sm">
           {error}
@@ -222,20 +277,20 @@ export default function AdminDashboard() {
         <section className="bg-white shadow rounded p-6 space-y-4">
           <h2 className="text-xl font-bold">Équipe</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input className="border p-2 w-full" placeholder="Nom" name="name" value={form.name} onChange={handleChange} />
-            <input className="border p-2 w-full" placeholder="Rôle" name="role" value={form.role} onChange={handleChange} />
-            <input type="file" className="border p-2 w-full" onChange={handleFileChange} />
-            <input className="border p-2 w-full" placeholder="LinkedIn" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} />
+            <input aria-label="Nom du membre" className="border p-2 w-full" placeholder="Nom" name="name" value={form.name} onChange={handleChange} />
+            <input aria-label="Rôle du membre" className="border p-2 w-full" placeholder="Rôle" name="role" value={form.role} onChange={handleChange} />
+            <input aria-label="Photo du membre" type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="border p-2 w-full" onChange={handleFileChange} />
+            <input aria-label="Profil LinkedIn du membre" className="border p-2 w-full" placeholder="LinkedIn" name="linkedinUrl" value={form.linkedinUrl} onChange={handleChange} />
           </div>
           {preview && (<Image width={800} height={400} src={preview} alt="preview" className="w-32 h-32 object-cover rounded-full" />)}
           <Button className="text-white px-4 py-2 rounded hover:cursor-pointer" variant={"humae"} onClick={saveMember} disabled={saving}>{saving ? 'En cours...' : editingId ? 'Enregistrer' : 'Ajouter'}</Button>
           <ul className="space-y-2">
             {team.map(member => (
               <li key={member.id} className="flex items-center justify-between border p-2 rounded">
-                <div className="flex items-center space-x-2 cursor-pointer flex-1" onClick={() => { setForm({ name: member.name, role: member.role, imageSrc: member.imageSrc, linkedinUrl: member.linkedinUrl || '' }); setEditingId(member.id); setPreview(member.imageSrc); }}>
-                  <Image src={member.imageSrc} alt={member.name} width={48} height={48} className="w-12 h-12 rounded-full object-cover" />
+                <button type="button" className="flex items-center space-x-2 cursor-pointer flex-1 text-left" onClick={() => { setForm({ name: member.name, role: member.role, imageSrc: member.imageSrc, linkedinUrl: member.linkedinUrl || '' }); setEditingId(member.id); setPreview(member.imageSrc); }}>
+                  <Image src={member.imageSrc || '/assets/icon.png'} alt={member.name} width={48} height={48} className="w-12 h-12 rounded-full object-cover" />
                   <span>{member.name}</span>
-                </div>
+                </button>
                 <Button className="hover:cursor-pointer" variant={"humae"} onClick={() => deleteMember(member.id)}>Supprimer</Button>
               </li>
             ))}
@@ -245,20 +300,20 @@ export default function AdminDashboard() {
         <section className="bg-white shadow rounded p-6 space-y-4">
           <h2 className="text-xl font-bold">Actualités</h2>
           <div className="grid grid-cols-1 gap-2">
-            <input className="border p-2 w-full" placeholder="Titre" value={newsForm.title} onChange={e => setNewsForm({ ...newsForm, title: e.target.value })} />
-            <input className="border p-2 w-full" placeholder="Sujet" value={newsForm.subject} onChange={e => setNewsForm({ ...newsForm, subject: e.target.value })} />
-            <textarea className="border p-2 w-full" placeholder="Contenu" value={newsForm.content} onChange={e => setNewsForm({ ...newsForm, content: e.target.value })} />
-            <input type="file" className="border p-2 w-full" onChange={handleNewsFileChange} />
+            <input aria-label="Titre de l’actualité" className="border p-2 w-full" placeholder="Titre" value={newsForm.title} onChange={e => setNewsForm({ ...newsForm, title: e.target.value })} />
+            <input aria-label="Sujet de l’actualité" className="border p-2 w-full" placeholder="Sujet" value={newsForm.subject} onChange={e => setNewsForm({ ...newsForm, subject: e.target.value })} />
+            <textarea aria-label="Contenu de l’actualité" className="border p-2 w-full" placeholder="Contenu" value={newsForm.content} onChange={e => setNewsForm({ ...newsForm, content: e.target.value })} />
+            <input aria-label="Image de l’actualité" type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="border p-2 w-full" onChange={handleNewsFileChange} />
           </div>
           {newsPreview && (<Image width={800} height={400} src={newsPreview} alt="preview" className="w-32 h-32 object-cover" />)}
           <Button className="hover:cursor-pointer" variant="humae" onClick={saveNews} disabled={saving}>{saving ? 'En cours...' : editingNewsId ? 'Enregistrer' : 'Ajouter'}</Button>
           <ul className="space-y-1 mt-2">
             {news.map(n => (
               <li key={n.id} className="flex justify-between border p-2 rounded">
-                <div className="flex-1 cursor-pointer" onClick={() => { setNewsForm({ title: n.title, subject: n.subject, content: n.content, imageSrc: n.imageSrc }); setEditingNewsId(n.id); setNewsPreview(n.imageSrc); }}>
+                <button type="button" className="flex-1 cursor-pointer text-left" onClick={() => { setNewsForm({ title: n.title, subject: n.subject, content: n.content, imageSrc: n.imageSrc }); setEditingNewsId(n.id); setNewsPreview(n.imageSrc); }}>
                   {n.title}
-                </div>
-                <button className="text-red-500" onClick={async () => deleteNewsItem(n.id)}>Supprimer</button>
+                </button>
+                <button type="button" className="text-red-500" onClick={async () => deleteNewsItem(n.id)}>Supprimer</button>
               </li>
             ))}
           </ul>
@@ -268,16 +323,16 @@ export default function AdminDashboard() {
       <section className="bg-white shadow rounded p-6 space-y-4">
         <h2 className="text-xl font-bold">Utilisateurs</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          <input className="border p-2 w-full" placeholder="Nom d'utilisateur" value={userForm.username} onChange={e => setUserForm({ ...userForm, username: e.target.value })} />
-          <input className="border p-2 w-full" placeholder="Mot de passe" type="password" value={userForm.password} onChange={e => setUserForm({ ...userForm, password: e.target.value })} />
-          <select className="border p-2 w-full" value={userForm.memberId} onChange={e => setUserForm({ ...userForm, memberId: e.target.value })}>
+          <input aria-label="Nom d’utilisateur" className="border p-2 w-full" placeholder="Nom d'utilisateur" value={userForm.username} onChange={e => setUserForm({ ...userForm, username: e.target.value })} />
+          <input aria-label="Mot de passe du membre" className="border p-2 w-full" placeholder="Mot de passe" type="password" value={userForm.password} onChange={e => setUserForm({ ...userForm, password: e.target.value })} />
+          <select aria-label="Membre associé" className="border p-2 w-full" value={userForm.memberId} onChange={e => setUserForm({ ...userForm, memberId: e.target.value })}>
             <option value="">Membre</option>
             {team.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
           </select>
         </div>
         <Button className="hover:cursor-pointer" variant={"humae"} disabled={saving} onClick={async () => {
           if(!userForm.username || !userForm.password || !userForm.memberId) return;
-          if(userForm.password.length < 8) { setError('Le mot de passe doit comporter au moins 8 caractères'); return; }
+          if(userForm.password.length < 12) { setError('Le mot de passe doit comporter au moins 12 caractères'); return; }
           setSaving(true)
           setError(null)
           try {

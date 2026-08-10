@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getNewsItem, updateNews, deleteNews } from '@/lib/newsService'
 import { requireAdmin } from '@/lib/authGuard'
+import { newsUpdateSchema } from '@/lib/validation'
 
 interface Params {
   params: Promise<{ id: string }>
@@ -18,13 +19,17 @@ export async function PUT(req: NextRequest, { params }: Params) {
   if (denied) return denied
 
   const { id } = await params
-  const body = await req.json()
+  const body = await req.json().catch(() => null)
+  const parsed = newsUpdateSchema.safeParse(body)
+  if (!parsed.success) {
+    return NextResponse.json({ error: 'Invalid news data' }, { status: 400 })
+  }
   try {
-    const updated = await updateNews(id, body)
+    const updated = await updateNews(id, parsed.data)
     return NextResponse.json(updated)
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal error'
-    return NextResponse.json({ error: message }, { status: 400 })
+    console.error('Unable to update news.', err)
+    return NextResponse.json({ error: 'Unable to update news' }, { status: 503 })
   }
 }
 
@@ -37,7 +42,7 @@ export async function DELETE(req: NextRequest, { params }: Params) {
     await deleteNews(id)
     return NextResponse.json({ success: true })
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal error'
-    return NextResponse.json({ error: message }, { status: 400 })
+    console.error('Unable to delete news.', err)
+    return NextResponse.json({ error: 'Unable to delete news' }, { status: 503 })
   }
 }

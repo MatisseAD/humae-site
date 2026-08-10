@@ -6,7 +6,6 @@ import FeatureSectionManage from '@/components/FeatureSectionManage';
 import { TestimonialSection } from '@/components/TestimonialSection';
 import FinalCTASection from "@/components/FinalCTASection";
 import StackedCardsSection from "@/components/StackedCardsSection";
-
 export default function HomePage() {
   return (
       <>

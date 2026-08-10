@@ -9,6 +9,7 @@ export const UpArrow = () => {
     return (
         <Button
             variant="humaeButtonTop"
+            aria-label="Revenir en haut de la page"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
             <ArrowUp className="h-6 w-6 text-gray-600" />

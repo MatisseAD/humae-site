@@ -22,9 +22,16 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
     }
   }
 
-  const user = await getUser(id)
-  if (user) return NextResponse.json(user)
-  return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  try {
+    const user = await getUser(id)
+    if (user) {
+      return NextResponse.json(user, { headers: { 'Cache-Control': 'no-store' } })
+    }
+    return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  } catch (error) {
+    console.error('Unable to load a member account.', error)
+    return NextResponse.json({ error: 'Service unavailable' }, { status: 503 })
+  }
 }
 
 export async function DELETE(req: NextRequest, { params }: RouteParams) {
@@ -36,7 +43,7 @@ export async function DELETE(req: NextRequest, { params }: RouteParams) {
     await deleteUser(id)
     return NextResponse.json({ success: true })
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal error'
-    return NextResponse.json({ error: message }, { status: 400 })
+    console.error('Unable to delete a member account.', err)
+    return NextResponse.json({ error: 'Unable to delete account' }, { status: 503 })
   }
 }

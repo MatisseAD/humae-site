@@ -1,17 +1,28 @@
 // app/contact/page.tsx
 
-import type { Metadata } from 'next';
 import { ContactForm } from '@/components/ContactForm';
 import { PhoneIcon, EnvelopeIcon, MapPinIcon } from '@heroicons/react/24/outline';
 import Link from "next/link";
+import { createPageMetadata } from '@/lib/siteMetadata';
 // Les imports de toast et sendEmail ont été retirés car non utilisés ici
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
     title: 'Contact - Humae',
     description: 'Contactez Humae pour toute question ou demande de devis.',
-};
+    path: '/contact',
+});
 
-export default function ContactPage() {
+export default async function ContactPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ subject?: string | string[] }>;
+}) {
+    const params = await searchParams;
+    const requestedSubject = Array.isArray(params.subject) ? params.subject[0] : params.subject;
+    const defaultSubject = typeof requestedSubject === 'string'
+        ? requestedSubject.trim().slice(0, 200)
+        : '';
+
     return (
         <div className="container mx-auto max-w-6xl px-4 py-16">
             <div className="text-center mb-12">
@@ -54,7 +65,7 @@ export default function ContactPage() {
 
                 {/* Partie droite : Formulaire */}
                 <div>
-                    <ContactForm />
+                    <ContactForm defaultSubject={defaultSubject} />
                 </div>
             </div>
         </div>

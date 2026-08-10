@@ -2,7 +2,6 @@
 'use client'
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, useCallback } from 'react';
 import confetti from 'canvas-confetti';
 
@@ -19,8 +18,46 @@ interface TeamCardProps {
     linkedinUrl?: string;
 }
 
+function safePublicImage(value: string): string {
+    const candidate = value.trim();
+    if (candidate.startsWith('/') && !candidate.startsWith('//')) return candidate;
+
+    try {
+        const url = new URL(candidate);
+        const configuredUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        if (
+            configuredUrl &&
+            url.protocol === 'https:' &&
+            url.origin === new URL(configuredUrl).origin
+        ) {
+            return url.toString();
+        }
+    } catch {
+        // Fall through to the branded placeholder.
+    }
+
+    return '/assets/icon.png';
+}
+
+function safeLinkedIn(value?: string): string | null {
+    if (!value) return null;
+
+    try {
+        const url = new URL(value);
+        return url.protocol === 'https:' &&
+            (url.hostname === 'linkedin.com' || url.hostname.endsWith('.linkedin.com'))
+            ? url.toString()
+            : null;
+    } catch {
+        return null;
+    }
+}
+
 export const TeamCard = ({ name, role, imageSrc, linkedinUrl }: TeamCardProps) => {
     const [clickCount, setClickCount] = useState(0);
+    const displayImage = safePublicImage(imageSrc);
+    const displayLinkedIn = safeLinkedIn(linkedinUrl);
+    const isInteractiveImage = name === 'Christian PERRIN';
 
     const handleImageClick = useCallback(() => {
         if (name === 'Christian PERRIN') {
@@ -41,7 +78,7 @@ export const TeamCard = ({ name, role, imageSrc, linkedinUrl }: TeamCardProps) =
                     return Math.random() * (max - min) + min;
                 }
 
-                const interval: any = setInterval(() => {
+                const interval: ReturnType<typeof setInterval> = setInterval(() => {
                     const timeLeft = animationEnd - Date.now();
 
                     if (timeLeft <= 0) {
@@ -63,27 +100,44 @@ export const TeamCard = ({ name, role, imageSrc, linkedinUrl }: TeamCardProps) =
         }
     }, [clickCount, name]);
 
+    const portrait = (
+        <Image
+            src={displayImage}
+            alt={`Photo de ${name}`}
+            fill
+            sizes="192px"
+            className="rounded-full object-cover transition-transform hover:scale-105"
+        />
+    );
+
     return (
         <div className="text-center">
-            <div 
-                className="relative w-48 h-48 mx-auto mb-4 cursor-pointer" 
-                onClick={handleImageClick}
-            >
-                <Image
-                    src={imageSrc}
-                    alt={`Photo de ${name}`}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-full transition-transform hover:scale-105"
-                />
-            </div>
+            {isInteractiveImage ? (
+                <button
+                    type="button"
+                    className="relative block w-48 h-48 mx-auto mb-4 cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-4"
+                    onClick={handleImageClick}
+                    aria-label={`Afficher la surprise de ${name}`}
+                >
+                    {portrait}
+                </button>
+            ) : (
+                <div className="relative w-48 h-48 mx-auto mb-4">
+                    {portrait}
+                </div>
+            )}
             <h3 className="text-xl font-bold text-gray-900">{name}</h3>
             <p className="text-[var(--humae-violet)]">{role}</p>
-            {linkedinUrl && (
+            {displayLinkedIn && (
                 <div className="mt-2">
-                    <Link href={linkedinUrl} passHref>
-                        <LinkedInIcon target="_blank" className="w-6 h-6 mx-auto text-gray-400 hover:text-[var(--humae-orange)]" />
-                    </Link>
+                    <a
+                        href={displayLinkedIn}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Profil LinkedIn de ${name}`}
+                    >
+                        <LinkedInIcon className="w-6 h-6 mx-auto text-gray-400 hover:text-[var(--humae-orange)]" />
+                    </a>
                 </div>
             )}
         </div>

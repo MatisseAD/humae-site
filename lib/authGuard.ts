@@ -1,6 +1,11 @@
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
+import {
+  ADMIN_COOKIE_NAME,
+  MEMBER_COOKIE_NAME,
+  verifyAdminToken,
+  verifyMemberToken,
+} from './authTokens'
 
 /**
  * Verifies the adminAuth cookie and returns null when valid.
@@ -11,12 +16,12 @@ import jwt from 'jsonwebtoken'
  */
 export async function requireAdmin(): Promise<NextResponse | null> {
   const cookieStore = await cookies()
-  const token = cookieStore.get('adminAuth')?.value
+  const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value
   if (!token) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
   try {
-    jwt.verify(token, process.env.ADMIN_JWT_SECRET!)
+    verifyAdminToken(token)
     return null
   } catch {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -29,12 +34,12 @@ export async function requireAdmin(): Promise<NextResponse | null> {
  */
 export async function requireUser(): Promise<string | NextResponse> {
   const cookieStore = await cookies()
-  const token = cookieStore.get('userAuth')?.value
+  const token = cookieStore.get(MEMBER_COOKIE_NAME)?.value
   if (!token) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
   try {
-    const payload = jwt.verify(token, process.env.ADMIN_JWT_SECRET!) as { userId: string }
+    const payload = verifyMemberToken(token)
     return payload.userId
   } catch {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
